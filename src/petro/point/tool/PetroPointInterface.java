@@ -1,22 +1,103 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package petro.point.tool;
 
-/**
- *
- * @author thara
- */
+package petro.point.tool;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 public class PetroPointInterface extends javax.swing.JFrame {
 
-    /**
-     * Creates new form PetroPointInterface
-     */
+  
+    private int[] petrolStock; // Array for petrol stock
+    private int[] dieselStock; // Array for diesel stock (added for fuel type selection)
+    
+    private static final String DB_URL = "jdbc:mysql://localhost:3306/petropointtool"; // Replace with your DB URL
+    private static final String DB_USERNAME = "root"; // Replace with your DB username
+    private static final String DB_PASSWORD = ""; // Replace with your DB password
+  
+    
+    
     public PetroPointInterface() {
+        
+           petrolStock = new int[1]; // Fixed size for petrol queue
+        dieselStock = new int[1]; // Fixed size for diesel queue
         initComponents();
+        loadFuelStocksFromDatabase(); // Load both petrol and diesel stocks from the database
     }
+    
+    private void loadFuelStocksFromDatabase() {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            // Get the total petrol stock
+            String queryPetrol = "SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Petrol'";
+            PreparedStatement stmtPetrol = conn.prepareStatement(queryPetrol);
+            ResultSet rsPetrol = stmtPetrol.executeQuery();
+            if (rsPetrol.next()) {
+                petrolStock[0] = rsPetrol.getInt("TotalAmount");
+            } else {
+                petrolStock[0] = 0; // Default stock if no rows found
+            }
 
+            // Get the total diesel stock
+            String queryDiesel = "SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Diesel'";
+            PreparedStatement stmtDiesel = conn.prepareStatement(queryDiesel);
+            ResultSet rsDiesel = stmtDiesel.executeQuery();
+            if (rsDiesel.next()) {
+                dieselStock[0] = rsDiesel.getInt("TotalAmount");
+            } else {
+                dieselStock[0] = 0; // Default stock if no rows found
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading fuel stocks from database!");
+        }
+    }
+    /*
+   public void RefillFuel(String fuelType, int fuelAmount) {
+        int currentStock = fuelType.equals("Petrol") ? petrolStock[0] : dieselStock[0]; // Get current stock based on fuel type
+
+        if (currentStock + fuelAmount > 10000) {
+            int canAdd = 10000 - currentStock; // Maximum additional fuel that can be added
+            JOptionPane.showMessageDialog(this, "Cannot refill more than 10,000 for " + fuelType + "! Can add only: " + canAdd);
+        } else {
+            // Update the appropriate stock value
+            if (fuelType.equals("Petrol")) {
+                petrolStock[0] += fuelAmount;
+            } else if (fuelType.equals("Diesel")) {
+                dieselStock[0] += fuelAmount;
+            }
+
+            // Add the new stock row to the database
+            addNewStockRowToDatabase(fuelType, fuelAmount);
+            System.out.println("petrol array value"+petrolStock[0]);
+            System.out.println("Diesel array value"+dieselStock[0]);
+        }
+    }*/ /*
+    private void addNewStockRowToDatabase(String fuelType, int fuelAmount) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            // Use INSERT to add a new row
+            String query = "INSERT INTO fuelstock (fuelType, Amount) VALUES (?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            // Set the PuelType and the fuel amount
+            stmt.setString(1, fuelType); // Fuel type (Petrol or Diesel)
+            stmt.setInt(2, fuelAmount); // Amount to insert
+
+            // Execute the insert
+            int rowsInserted = stmt.executeUpdate();
+            System.out.println("Rows inserted: " + rowsInserted);
+
+            if (rowsInserted > 0) {
+                JOptionPane.showMessageDialog(this, "New stock row added for " + fuelType + ": " + fuelAmount);
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to add new stock row for " + fuelType);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error adding new stock row for " + fuelType + " in database: " + e.getMessage());
+        }
+    }
+            */
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,57 +107,90 @@ public class PetroPointInterface extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel1 = new javax.swing.JPanel();
+        Refill_text = new javax.swing.JTextField();
+        btn_refill = new javax.swing.JButton();
+        FuelType_Combo = new javax.swing.JComboBox<>();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setBackground(new java.awt.Color(255, 255, 255));
+
+        jPanel1.setBackground(new java.awt.Color(12, 87, 218));
+        jPanel1.setForeground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel1.add(Refill_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 75, -1));
+
+        btn_refill.setText("Refill");
+        btn_refill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refillActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_refill, new org.netbeans.lib.awtextra.AbsoluteConstraints(589, 144, -1, -1));
+
+        FuelType_Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petrol", "Diesel" }));
+        FuelType_Combo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FuelType_ComboActionPerformed(evt);
+            }
+        });
+        jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 70, -1, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_refillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refillActionPerformed
+       /*   try {
+            int fuelAmount = Integer.parseInt(Refill_text.getText()); // Get input from the text field
+            String selectedFuelType = FuelType_Combo.getSelectedItem().toString(); // Get selected fuel type
+            RefillFuel(selectedFuelType, fuelAmount); // Refill the selected fuel type with the given amount
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(this, "Please enter a valid number.");
+        } */
+    }//GEN-LAST:event_btn_refillActionPerformed
+
+    private void FuelType_ComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_ComboActionPerformed
+        
+    }//GEN-LAST:event_FuelType_ComboActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
+     /*   try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PetroPointInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PetroPointInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PetroPointInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (Exception ex) {
             java.util.logging.Logger.getLogger(PetroPointInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
 
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new PetroPointInterface().setVisible(true);
             }
-        });
+        });    */
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> FuelType_Combo;
+    private javax.swing.JTextField Refill_text;
+    private javax.swing.JButton btn_refill;
+    private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
