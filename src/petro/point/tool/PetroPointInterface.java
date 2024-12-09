@@ -26,6 +26,33 @@ public class PetroPointInterface extends javax.swing.JFrame {
         loadFuelStocksFromDatabase(); // Load both petrol and diesel stocks from the database
     }
     
+    private void loadFuelStocksFromDatabase() {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            // Get the total petrol stock
+            String queryPetrol = "SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Petrol'";
+            PreparedStatement stmtPetrol = conn.prepareStatement(queryPetrol);
+            ResultSet rsPetrol = stmtPetrol.executeQuery();
+            if (rsPetrol.next()) {
+                petrolStock[0] = rsPetrol.getInt("TotalAmount");
+            } else {
+                petrolStock[0] = 0; // Default stock if no rows found
+            }
+
+            // Get the total diesel stock
+            String queryDiesel = "SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Diesel'";
+            PreparedStatement stmtDiesel = conn.prepareStatement(queryDiesel);
+            ResultSet rsDiesel = stmtDiesel.executeQuery();
+            if (rsDiesel.next()) {
+                dieselStock[0] = rsDiesel.getInt("TotalAmount");
+            } else {
+                dieselStock[0] = 0; // Default stock if no rows found
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error loading fuel stocks from database!");
+        }
+    }
+    
    
             
     /**
