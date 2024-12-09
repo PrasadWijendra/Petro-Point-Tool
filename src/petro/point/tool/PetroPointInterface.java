@@ -26,77 +26,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
         loadFuelStocksFromDatabase(); // Load both petrol and diesel stocks from the database
     }
     
-    private void loadFuelStocksFromDatabase() {
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            // Get the total petrol stock
-            String queryPetrol = "SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Petrol'";
-            PreparedStatement stmtPetrol = conn.prepareStatement(queryPetrol);
-            ResultSet rsPetrol = stmtPetrol.executeQuery();
-            if (rsPetrol.next()) {
-                petrolStock[0] = rsPetrol.getInt("TotalAmount");
-            } else {
-                petrolStock[0] = 0; // Default stock if no rows found
-            }
-
-            // Get the total diesel stock
-            String queryDiesel = "SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Diesel'";
-            PreparedStatement stmtDiesel = conn.prepareStatement(queryDiesel);
-            ResultSet rsDiesel = stmtDiesel.executeQuery();
-            if (rsDiesel.next()) {
-                dieselStock[0] = rsDiesel.getInt("TotalAmount");
-            } else {
-                dieselStock[0] = 0; // Default stock if no rows found
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error loading fuel stocks from database!");
-        }
-    }
-    
-   public void RefillFuel(String fuelType, int fuelAmount) {
-        int currentStock = fuelType.equals("Petrol") ? petrolStock[0] : dieselStock[0]; // Get current stock based on fuel type
-
-        if (currentStock + fuelAmount > 10000) {
-            int canAdd = 10000 - currentStock; // Maximum additional fuel that can be added
-            JOptionPane.showMessageDialog(this, "Cannot refill more than 10,000 for " + fuelType + "! Can add only: " + canAdd);
-        } else {
-            // Update the appropriate stock value
-            if (fuelType.equals("Petrol")) {
-                petrolStock[0] += fuelAmount;
-            } else if (fuelType.equals("Diesel")) {
-                dieselStock[0] += fuelAmount;
-            }
-
-            // Add the new stock row to the database
-            addNewStockRowToDatabase(fuelType, fuelAmount);
-            System.out.println("petrol array value"+petrolStock[0]);
-            System.out.println("Diesel array value"+dieselStock[0]);
-        }
-    }
-    private void addNewStockRowToDatabase(String fuelType, int fuelAmount) {
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            // Use INSERT to add a new row
-            String query = "INSERT INTO fuelstock (fuelType, Amount) VALUES (?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(query);
-
-            // Set the PuelType and the fuel amount
-            stmt.setString(1, fuelType); // Fuel type (Petrol or Diesel)
-            stmt.setInt(2, fuelAmount); // Amount to insert
-
-            // Execute the insert
-            int rowsInserted = stmt.executeUpdate();
-            System.out.println("Rows inserted: " + rowsInserted);
-
-            if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(this, "New stock row added for " + fuelType + ": " + fuelAmount);
-            } else {
-                JOptionPane.showMessageDialog(this, "Failed to add new stock row for " + fuelType);
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error adding new stock row for " + fuelType + " in database: " + e.getMessage());
-        }
-    }
+   
             
     /**
      * This method is called from within the constructor to initialize the form.
@@ -207,22 +137,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            java.util.logging.Logger.getLogger(PetroPointInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PetroPointInterface().setVisible(true);
-            }
-        });    
+      
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
