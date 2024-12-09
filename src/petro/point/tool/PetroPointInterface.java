@@ -52,7 +52,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error loading fuel stocks from database!");
         }
     }
-    /*
+    
    public void RefillFuel(String fuelType, int fuelAmount) {
         int currentStock = fuelType.equals("Petrol") ? petrolStock[0] : dieselStock[0]; // Get current stock based on fuel type
 
@@ -72,7 +72,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
             System.out.println("petrol array value"+petrolStock[0]);
             System.out.println("Diesel array value"+dieselStock[0]);
         }
-    }*/ /*
+    }
     private void addNewStockRowToDatabase(String fuelType, int fuelAmount) {
         try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
             // Use INSERT to add a new row
@@ -97,7 +97,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error adding new stock row for " + fuelType + " in database: " + e.getMessage());
         }
     }
-            */
+            
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -108,25 +108,22 @@ public class PetroPointInterface extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        FuelType_Combo = new javax.swing.JComboBox<>();
         Refill_text = new javax.swing.JTextField();
         btn_refill = new javax.swing.JButton();
-        FuelType_Combo = new javax.swing.JComboBox<>();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        Dprice_txt = new javax.swing.JTextField();
+        Pprice_txt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
 
-        jPanel1.setBackground(new java.awt.Color(12, 87, 218));
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel1.add(Refill_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 75, -1));
-
-        btn_refill.setText("Refill");
-        btn_refill.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btn_refillActionPerformed(evt);
-            }
-        });
-        jPanel1.add(btn_refill, new org.netbeans.lib.awtextra.AbsoluteConstraints(589, 144, -1, -1));
 
         FuelType_Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petrol", "Diesel" }));
         FuelType_Combo.addActionListener(new java.awt.event.ActionListener() {
@@ -134,7 +131,48 @@ public class PetroPointInterface extends javax.swing.JFrame {
                 FuelType_ComboActionPerformed(evt);
             }
         });
-        jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 70, -1, -1));
+        jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
+        jPanel1.add(Refill_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 75, -1));
+
+        btn_refill.setText("Refill");
+        btn_refill.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_refillActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_refill, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, -1, -1));
+
+        jPanel2.setBackground(new java.awt.Color(204, 0, 0));
+
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("PETRO POINT TOOL");
+        jPanel2.add(jLabel1);
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 40));
+
+        jPanel3.setBackground(new java.awt.Color(204, 0, 0));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 670, Short.MAX_VALUE)
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 20, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, -1, 20));
+
+        jLabel2.setText("Today diesel price");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, 110, 20));
+
+        jLabel3.setText("Today petrol price");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 110, 20));
+        jPanel1.add(Dprice_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 130, 20));
+        jPanel1.add(Pprice_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 120, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -151,13 +189,13 @@ public class PetroPointInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_refillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refillActionPerformed
-       /*   try {
+         try {
             int fuelAmount = Integer.parseInt(Refill_text.getText()); // Get input from the text field
             String selectedFuelType = FuelType_Combo.getSelectedItem().toString(); // Get selected fuel type
             RefillFuel(selectedFuelType, fuelAmount); // Refill the selected fuel type with the given amount
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid number.");
-        } */
+        } 
     }//GEN-LAST:event_btn_refillActionPerformed
 
     private void FuelType_ComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_ComboActionPerformed
@@ -169,7 +207,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
-     /*   try {
+        try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
                     javax.swing.UIManager.setLookAndFeel(info.getClassName());
@@ -184,13 +222,20 @@ public class PetroPointInterface extends javax.swing.JFrame {
             public void run() {
                 new PetroPointInterface().setVisible(true);
             }
-        });    */
+        });    
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField Dprice_txt;
     private javax.swing.JComboBox<String> FuelType_Combo;
+    private javax.swing.JTextField Pprice_txt;
     private javax.swing.JTextField Refill_text;
     private javax.swing.JButton btn_refill;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     // End of variables declaration//GEN-END:variables
 }
