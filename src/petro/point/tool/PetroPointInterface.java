@@ -53,7 +53,27 @@ public class PetroPointInterface extends javax.swing.JFrame {
         }
     }
     
-   
+   public void RefillFuel(String fuelType, int fuelAmount) {
+        int currentStock = fuelType.equals("Petrol") ? petrolStock[0] : dieselStock[0]; // Get current stock based on fuel type
+
+        if (currentStock + fuelAmount > 10000) {
+            int canAdd = 10000 - currentStock; // Maximum additional fuel that can be added
+            JOptionPane.showMessageDialog(this, "Cannot refill more than 10,000 for " + fuelType + "! Can add only: " + canAdd);
+        } else {
+            // Update the appropriate stock value
+            if (fuelType.equals("Petrol")) {
+                petrolStock[0] += fuelAmount;
+            } else if (fuelType.equals("Diesel")) {
+                dieselStock[0] += fuelAmount;
+            }
+
+            // Add the new stock row to the database
+            addNewStockRowToDatabase(fuelType, fuelAmount);
+            System.out.println("petrol array value"+petrolStock[0]);
+            System.out.println("Diesel array value"+dieselStock[0]);
+        }
+    }
+
             
     /**
      * This method is called from within the constructor to initialize the form.
