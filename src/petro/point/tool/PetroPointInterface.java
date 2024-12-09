@@ -74,6 +74,30 @@ public class PetroPointInterface extends javax.swing.JFrame {
         }
     }
 
+   private void addNewStockRowToDatabase(String fuelType, int fuelAmount) {
+        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+            // Use INSERT to add a new row
+            String query = "INSERT INTO fuelstock (fuelType, Amount) VALUES (?, ?)";
+            PreparedStatement stmt = conn.prepareStatement(query);
+
+            // Set the PuelType and the fuel amount
+            stmt.setString(1, fuelType); // Fuel type (Petrol or Diesel)
+            stmt.setInt(2, fuelAmount); // Amount to insert
+
+            // Execute the insert
+            int rowsInserted = stmt.executeUpdate();
+            System.out.println("Rows inserted: " + rowsInserted);
+
+            if (rowsInserted > 0) {
+                JOptionPane.showMessageDialog(this, "New stock row added for " + fuelType + ": " + fuelAmount);
+            } else {
+                JOptionPane.showMessageDialog(this, "Failed to add new stock row for " + fuelType);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error adding new stock row for " + fuelType + " in database: " + e.getMessage());
+        }
+    }
             
     /**
      * This method is called from within the constructor to initialize the form.
@@ -184,6 +208,22 @@ public class PetroPointInterface extends javax.swing.JFrame {
      */
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
+        try {
+            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                if ("Nimbus".equals(info.getName())) {
+                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                    break;
+                }
+            }
+        } catch (Exception ex) {
+            java.util.logging.Logger.getLogger(PetroPointInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+        }
+
+        java.awt.EventQueue.invokeLater(new Runnable() {
+            public void run() {
+                new PetroPointInterface().setVisible(true);
+            }
+        }); 
       
     }
 
