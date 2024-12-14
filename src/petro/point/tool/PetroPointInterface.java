@@ -2,8 +2,6 @@
 package petro.point.tool;
 import java.sql.*;
 import javax.swing.JOptionPane;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class PetroPointInterface extends javax.swing.JFrame {
 
@@ -112,10 +110,8 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        Dprice_txt = new javax.swing.JTextField();
-        Pprice_txt = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -129,8 +125,8 @@ public class PetroPointInterface extends javax.swing.JFrame {
                 FuelType_ComboActionPerformed(evt);
             }
         });
-        jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, -1));
-        jPanel1.add(Refill_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, 75, -1));
+        jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 90, 140, 40));
+        jPanel1.add(Refill_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 140, 40));
 
         btn_refill.setText("Refill");
         btn_refill.addActionListener(new java.awt.event.ActionListener() {
@@ -138,13 +134,13 @@ public class PetroPointInterface extends javax.swing.JFrame {
                 btn_refillActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_refill, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 140, -1, -1));
+        jPanel1.add(btn_refill, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 420, 160, 40));
 
         jPanel2.setBackground(new java.awt.Color(204, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("PETRO POINT TOOL");
+        jLabel1.setText("PETRO POINT");
         jPanel2.add(jLabel1);
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 40));
@@ -152,17 +148,11 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jPanel3.setBackground(new java.awt.Color(204, 0, 0));
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 670, 20));
 
-        jLabel2.setText("Today diesel price");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, 110, 20));
+        jLabel4.setText("Enter Refill Amount");
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 120, -1));
 
-        jLabel3.setText("Today petrol price");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 110, 20));
-
-        Dprice_txt.setEditable(false);
-        jPanel1.add(Dprice_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 130, 20));
-
-        Pprice_txt.setEditable(false);
-        jPanel1.add(Pprice_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 120, 20));
+        jLabel5.setText("Fuel Type");
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 60, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -218,14 +208,12 @@ public class PetroPointInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextField Dprice_txt;
     private javax.swing.JComboBox<String> FuelType_Combo;
-    private javax.swing.JTextField Pprice_txt;
     private javax.swing.JTextField Refill_text;
     private javax.swing.JButton btn_refill;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
