@@ -1,9 +1,6 @@
 
 package petro.point.tool;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import javax.swing.JOptionPane;
 
 public class PetroPointInterface extends javax.swing.JFrame {
@@ -12,41 +9,37 @@ public class PetroPointInterface extends javax.swing.JFrame {
     private int[] petrolStock; // Array for petrol stock
     private int[] dieselStock; // Array for diesel stock (added for fuel type selection)
     
-    private static final String DB_URL = "jdbc:mysql://localhost:3306/petropointtool"; // Replace with your DB URL
-    private static final String DB_USERNAME = "root"; // Replace with your DB username
-    private static final String DB_PASSWORD = ""; // Replace with your DB password
+    ResultSet rst;
   
     
     
     public PetroPointInterface() {
         
            petrolStock = new int[1]; // Fixed size for petrol queue
-        dieselStock = new int[1]; // Fixed size for diesel queue
+           dieselStock = new int[1]; // Fixed size for diesel queue
         initComponents();
         loadFuelStocksFromDatabase(); // Load both petrol and diesel stocks from the database
     }
     
     private void loadFuelStocksFromDatabase() {
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
+        try{
+            Statement st=DBConnection.getdbconnection().createStatement();
             // Get the total petrol stock
-            String queryPetrol = "SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Petrol'";
-            PreparedStatement stmtPetrol = conn.prepareStatement(queryPetrol);
-            ResultSet rsPetrol = stmtPetrol.executeQuery();
-            if (rsPetrol.next()) {
-                petrolStock[0] = rsPetrol.getInt("TotalAmount");
+            rst = st.executeQuery("SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Petrol'") ;
+            if (rst.next()) {
+                petrolStock[0] = rst.getInt("TotalAmount");
             } else {
                 petrolStock[0] = 0; // Default stock if no rows found
             }
 
             // Get the total diesel stock
-            String queryDiesel = "SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Diesel'";
-            PreparedStatement stmtDiesel = conn.prepareStatement(queryDiesel);
-            ResultSet rsDiesel = stmtDiesel.executeQuery();
-            if (rsDiesel.next()) {
-                dieselStock[0] = rsDiesel.getInt("TotalAmount");
+            rst = st.executeQuery( "SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Diesel'");
+            if (rst.next()) {
+                dieselStock[0] = rst.getInt("TotalAmount");
             } else {
                 dieselStock[0] = 0; // Default stock if no rows found
             }
+           
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error loading fuel stocks from database!");
@@ -74,15 +67,13 @@ public class PetroPointInterface extends javax.swing.JFrame {
         }
     }
 
-   private void addNewStockRowToDatabase(String fuelType, int fuelAmount) {
-        try (Connection conn = DriverManager.getConnection(DB_URL, DB_USERNAME, DB_PASSWORD)) {
-            // Use INSERT to add a new row
-            String query = "INSERT INTO fuelstock (fuelType, Amount) VALUES (?, ?)";
-            PreparedStatement stmt = conn.prepareStatement(query);
+  private void addNewStockRowToDatabase(String fuelType, int fuelAmount) {
+        try (Connection con = DBConnection.getdbconnection();
+             PreparedStatement stmt = con.prepareStatement("INSERT INTO fuelstock (fuelType, Amount) VALUES (?, ?)");) {
 
-            // Set the PuelType and the fuel amount
-            stmt.setString(1, fuelType); // Fuel type (Petrol or Diesel)
-            stmt.setInt(2, fuelAmount); // Amount to insert
+            // Set the fuelType and the fuel amount
+            stmt.setString(1, fuelType);
+            stmt.setInt(2, fuelAmount);
 
             // Execute the insert
             int rowsInserted = stmt.executeUpdate();
@@ -98,6 +89,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error adding new stock row for " + fuelType + " in database: " + e.getMessage());
         }
     }
+
             
     /**
      * This method is called from within the constructor to initialize the form.
@@ -153,40 +145,33 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 40));
 
         jPanel3.setBackground(new java.awt.Color(204, 0, 0));
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 670, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 20, Short.MAX_VALUE)
-        );
-
-        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 440, -1, 20));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 670, 20));
 
         jLabel2.setText("Today diesel price");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, 110, 20));
 
         jLabel3.setText("Today petrol price");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, 110, 20));
+
+        Dprice_txt.setEditable(false);
         jPanel1.add(Dprice_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 70, 130, 20));
+
+        Pprice_txt.setEditable(false);
         jPanel1.add(Pprice_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 70, 120, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 525, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
-        pack();
+        setSize(new java.awt.Dimension(684, 532));
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btn_refillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refillActionPerformed
