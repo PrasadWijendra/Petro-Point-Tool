@@ -2,6 +2,8 @@
 package petro.point.tool;
 import java.sql.*;
 import javax.swing.JOptionPane;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class PetroPointInterface extends javax.swing.JFrame {
 
@@ -11,8 +13,6 @@ public class PetroPointInterface extends javax.swing.JFrame {
     
     ResultSet rst;
   
-    
-    
     public PetroPointInterface() {
         
            petrolStock = new int[1]; // Fixed size for petrol queue
@@ -25,7 +25,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
         try{
             Statement st=DBConnection.getdbconnection().createStatement();
             // Get the total petrol stock
-            rst = st.executeQuery("SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Petrol'") ;
+            rst = st.executeQuery("SELECT SUM(Amount) AS TotalAmount FROM petrolStock'") ;
             if (rst.next()) {
                 petrolStock[0] = rst.getInt("TotalAmount");
             } else {
@@ -33,7 +33,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
             }
 
             // Get the total diesel stock
-            rst = st.executeQuery( "SELECT SUM(Amount) AS TotalAmount FROM fuelstock WHERE fuelType = 'Diesel'");
+            rst = st.executeQuery( "SELECT SUM(Amount) AS TotalAmount FROM dieselStock '");
             if (rst.next()) {
                 dieselStock[0] = rst.getInt("TotalAmount");
             } else {
@@ -62,18 +62,27 @@ public class PetroPointInterface extends javax.swing.JFrame {
 
             // Add the new stock row to the database
             addNewStockRowToDatabase(fuelType, fuelAmount);
-            System.out.println("petrol array value"+petrolStock[0]);
+            System.out.println("Petrol array value"+petrolStock[0]);
             System.out.println("Diesel array value"+dieselStock[0]);
         }
     }
 
   private void addNewStockRowToDatabase(String fuelType, int fuelAmount) {
+      
+      String tableName = fuelType.equals("Petrol") ? "petrolStock" : "dieselStock";
+      String sql = "INSERT INTO " + tableName + " (Amount, datetime) VALUES (?, ?)";
+      
         try (Connection con = DBConnection.getdbconnection();
-             PreparedStatement stmt = con.prepareStatement("INSERT INTO fuelstock (fuelType, Amount) VALUES (?, ?)");) {
+             PreparedStatement stmt = con.prepareStatement("INSERT INTO petrolStock VALUES (?, ?)");)
+               
+        {
 
+           LocalDateTime currentDateTime = LocalDateTime.now();
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+            
             // Set the fuelType and the fuel amount
-            stmt.setString(1, fuelType);
-            stmt.setInt(2, fuelAmount);
+            stmt.setInt(1, fuelAmount);
+            stmt.setString(2, currentDateTime.format(formatter));
 
             // Execute the insert
             int rowsInserted = stmt.executeUpdate();
