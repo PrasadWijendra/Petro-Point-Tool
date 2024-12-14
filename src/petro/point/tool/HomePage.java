@@ -65,7 +65,7 @@ public class HomePage extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("WELCOME PETRO POINT");
+        jLabel1.setText("WELCOME TO PETRO POINT");
         jPanel2.add(jLabel1);
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 40));
