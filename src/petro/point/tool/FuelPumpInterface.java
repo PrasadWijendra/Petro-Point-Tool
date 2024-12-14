@@ -2,14 +2,14 @@
 package petro.point.tool;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.Statement;
+
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 public class FuelPumpInterface extends javax.swing.JFrame {
 
-     class TransactionNode {
+    class TransactionNode {
         String fuelType;
         double amount;
         String dateTime;
@@ -24,8 +24,8 @@ public class FuelPumpInterface extends javax.swing.JFrame {
             this.prev = null;
         }
     }
-     
-         // Doubly Linked List for Transactions
+
+    // Doubly Linked List for Transactions
     class FuelTransactionList {
         TransactionNode head;
         TransactionNode tail;
@@ -53,9 +53,8 @@ public class FuelPumpInterface extends javax.swing.JFrame {
                 current = current.next;
             }
         }
-    }
-    
-    private void saveTransactionToDatabase(String fuelType, int amount, String dateTime) {
+
+        private void saveTransactionToDatabase(String fuelType, int amount, String dateTime) {
             String tableName = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
 
             try (Connection con = DBConnection.getdbconnection();
@@ -79,9 +78,9 @@ public class FuelPumpInterface extends javax.swing.JFrame {
             }
         }
     }
-    
-     private FuelTransactionList transactionList = new FuelTransactionList();
-     
+
+    private FuelTransactionList transactionList = new FuelTransactionList();
+
     public FuelPumpInterface() {
         initComponents();
     }
