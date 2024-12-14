@@ -1,5 +1,8 @@
 
 package petro.point.tool;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -38,6 +41,9 @@ public class FuelPumpInterface extends javax.swing.JFrame {
                 newNode.prev = tail;
                 tail = newNode;
             }
+
+            // Save the transaction to the database
+            saveTransactionToDatabase(fuelType, amount, dateTime);
         }
 
         public void displayTransactions() {
@@ -45,6 +51,31 @@ public class FuelPumpInterface extends javax.swing.JFrame {
             while (current != null) {
                 System.out.println("Fuel Type: " + current.fuelType + ", Amount: " + current.amount + ", Date-Time: " + current.dateTime);
                 current = current.next;
+            }
+        }
+    }
+    
+    private void saveTransactionToDatabase(String fuelType, int amount, String dateTime) {
+            String tableName = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
+
+            try (Connection con = DBConnection.getdbconnection();
+                 PreparedStatement stmt = con.prepareStatement(
+                         "INSERT INTO " + tableName + " (amount, datetime) VALUES (?, ?)")) {
+
+                stmt.setInt(1, amount);
+                stmt.setString(2, dateTime);
+
+                int rowsInserted = stmt.executeUpdate();
+                System.out.println("Rows inserted in " + tableName + ": " + rowsInserted);
+
+                if (rowsInserted > 0) {
+                    System.out.println("Transaction saved successfully in " + tableName);
+                } else {
+                    System.out.println("Failed to save transaction in " + tableName);
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                JOptionPane.showMessageDialog(null, "Error saving transaction to database: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
