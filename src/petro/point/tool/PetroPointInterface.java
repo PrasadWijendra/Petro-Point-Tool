@@ -22,10 +22,11 @@ public class PetroPointInterface extends javax.swing.JFrame {
     }
     
     private void loadFuelStocksFromDatabase() {
-        try{
-            Statement st=DBConnection.getdbconnection().createStatement();
+        try {
+            Statement st = DBConnection.getdbconnection().createStatement();
+
             // Get the total petrol stock
-            rst = st.executeQuery("SELECT SUM(Amount) AS TotalAmount FROM petrolStock'") ;
+            rst = st.executeQuery("SELECT SUM(amount) AS TotalAmount FROM petrolstock");
             if (rst.next()) {
                 petrolStock[0] = rst.getInt("TotalAmount");
             } else {
@@ -33,13 +34,13 @@ public class PetroPointInterface extends javax.swing.JFrame {
             }
 
             // Get the total diesel stock
-            rst = st.executeQuery( "SELECT SUM(Amount) AS TotalAmount FROM dieselStock '");
+            rst = st.executeQuery("SELECT SUM(amount) AS TotalAmount FROM dieselstock");
             if (rst.next()) {
                 dieselStock[0] = rst.getInt("TotalAmount");
             } else {
                 dieselStock[0] = 0; // Default stock if no rows found
             }
-           
+
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error loading fuel stocks from database!");
@@ -56,37 +57,32 @@ public class PetroPointInterface extends javax.swing.JFrame {
             // Update the appropriate stock value
             if (fuelType.equals("Petrol")) {
                 petrolStock[0] += fuelAmount;
+                addNewStockRowToDatabase("Petrol", fuelAmount); // Update petrol stock
             } else if (fuelType.equals("Diesel")) {
                 dieselStock[0] += fuelAmount;
+                addNewStockRowToDatabase("Diesel", fuelAmount); // Update diesel stock
             }
 
-            // Add the new stock row to the database
-            addNewStockRowToDatabase(fuelType, fuelAmount);
-            System.out.println("Petrol array value"+petrolStock[0]);
-            System.out.println("Diesel array value"+dieselStock[0]);
+            System.out.println("Petrol stock value: " + petrolStock[0]);
+            System.out.println("Diesel stock value: " + dieselStock[0]);
         }
     }
 
   private void addNewStockRowToDatabase(String fuelType, int fuelAmount) {
       
-      String tableName = fuelType.equals("Petrol") ? "petrolStock" : "dieselStock";
-      String sql = "INSERT INTO " + tableName + " (Amount, datetime) VALUES (?, ?)";
-      
-        try (Connection con = DBConnection.getdbconnection();
-             PreparedStatement stmt = con.prepareStatement("INSERT INTO petrolStock VALUES (?, ?)");)
-               
-        {
+      String tableName = fuelType.equals("Petrol") ? "petrolstock" : "dieselstock";
 
-           LocalDateTime currentDateTime = LocalDateTime.now();
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-            
-            // Set the fuelType and the fuel amount
+        try (Connection con = DBConnection.getdbconnection();
+             PreparedStatement stmt = con.prepareStatement(
+                     "INSERT INTO " + tableName + " (amount, datetime) VALUES (?, ?)")) {
+
+            // Set the fuel amount and the current datetime
             stmt.setInt(1, fuelAmount);
-            stmt.setString(2, currentDateTime.format(formatter));
+            stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
 
             // Execute the insert
             int rowsInserted = stmt.executeUpdate();
-            System.out.println("Rows inserted: " + rowsInserted);
+            System.out.println("Rows inserted in " + tableName + ": " + rowsInserted);
 
             if (rowsInserted > 0) {
                 JOptionPane.showMessageDialog(this, "New stock row added for " + fuelType + ": " + fuelAmount);
@@ -190,7 +186,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
             RefillFuel(selectedFuelType, fuelAmount); // Refill the selected fuel type with the given amount
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid number.");
-        } 
+        }
     }//GEN-LAST:event_btn_refillActionPerformed
 
     private void FuelType_ComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_ComboActionPerformed
