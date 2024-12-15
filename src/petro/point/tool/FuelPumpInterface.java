@@ -9,27 +9,27 @@ import javax.swing.JOptionPane;
 
 public class FuelPumpInterface extends javax.swing.JFrame {
 
+    // Node for Singly Linked List
     class TransactionNode {
         String fuelType;
         double amount;
         String dateTime;
         TransactionNode next;
-        TransactionNode prev;
 
         public TransactionNode(String fuelType, int amount, String dateTime) {
             this.fuelType = fuelType;
             this.amount = amount;
             this.dateTime = dateTime;
             this.next = null;
-            this.prev = null;
         }
     }
 
-    // Doubly Linked List for Transactions
+    // Singly Linked List for Transactions
     class FuelTransactionList {
         TransactionNode head;
         TransactionNode tail;
 
+        // Add a transaction to the linked list
         public void addTransaction(String fuelType, int amount) {
             String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
             TransactionNode newNode = new TransactionNode(fuelType, amount, dateTime);
@@ -38,7 +38,6 @@ public class FuelPumpInterface extends javax.swing.JFrame {
                 head = tail = newNode;
             } else {
                 tail.next = newNode;
-                newNode.prev = tail;
                 tail = newNode;
             }
 
@@ -46,6 +45,7 @@ public class FuelPumpInterface extends javax.swing.JFrame {
             saveTransactionToDatabase(fuelType, amount, dateTime);
         }
 
+        // Display all transactions
         public void displayTransactions() {
             TransactionNode current = head;
             while (current != null) {
@@ -54,6 +54,7 @@ public class FuelPumpInterface extends javax.swing.JFrame {
             }
         }
 
+        // Save transaction to database
         private void saveTransactionToDatabase(String fuelType, int amount, String dateTime) {
             String tableName = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
 
