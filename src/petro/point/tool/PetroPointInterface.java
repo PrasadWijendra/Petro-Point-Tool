@@ -78,21 +78,45 @@ public class PetroPointInterface extends javax.swing.JFrame {
             // Set the fuel amount and the current datetime
             stmt.setInt(1, fuelAmount);
             stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
-
             // Execute the insert
-            int rowsInserted = stmt.executeUpdate();
-            System.out.println("Rows inserted in " + tableName + ": " + rowsInserted);
-
+            
+              int rowsInserted = stmt.executeUpdate();
+              System.out.println("Rows inserted in " + tableName + ": " + rowsInserted);
+        
             if (rowsInserted > 0) {
-                JOptionPane.showMessageDialog(this, "New stock row added for " + fuelType + ": " + fuelAmount);
+            JOptionPane.showMessageDialog(this, "New stock row added for " + fuelType + ": " + fuelAmount);
+
+            // Record the transaction in the respective stock table
+            if (fuelType.equals("Petrol")) {
+                recordPetrolStockTransaction(fuelAmount);
             } else {
-                JOptionPane.showMessageDialog(this, "Failed to add new stock row for " + fuelType);
+                
             }
-        } catch (Exception e) {
-            e.printStackTrace();
-            JOptionPane.showMessageDialog(this, "Error adding new stock row for " + fuelType + " in database: " + e.getMessage());
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to add new stock row for " + fuelType);
         }
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error adding new stock row for " + fuelType + " in database: " + e.getMessage());
     }
+    }
+  
+  private void recordPetrolStockTransaction(int fuelAmount) {
+    try (Connection con = DBConnection.getdbconnection();
+         PreparedStatement stmt = con.prepareStatement(
+                 "INSERT INTO petrolstocktable (amount, datetime) VALUES (?, ?)")) {
+
+        stmt.setInt(1, fuelAmount);
+        stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+
+        stmt.executeUpdate();
+        System.out.println("Transaction recorded in petrolstocktable: " + fuelAmount);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error recording petrol transaction: " + e.getMessage());
+    }
+}
   
   // Method to reduce fuel stock after pumping
     public void reduceFuelStock(String fuelType, int fuelAmount) {
@@ -111,14 +135,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
                 System.out.println("Not enough Diesel in stock!");
             }
         }
-    }
-    
-
-
-
-
-
-            
+    }         
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
