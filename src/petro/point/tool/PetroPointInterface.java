@@ -113,31 +113,6 @@ public class PetroPointInterface extends javax.swing.JFrame {
         }
     }
     
-    private void updateStockInDatabase(String fuelType, int updatedAmount) {
-    // Determine the target table based on fuel type
-    String tableName = fuelType.equals("Petrol") ? "petrolstock" : "dieselstock";
-
-    try (Connection con = DBConnection.getdbconnection();
-         PreparedStatement stmt = con.prepareStatement(
-                 "UPDATE " + tableName + " SET amount = ?")) {
-
-        // Set the updated stock amount
-        stmt.setInt(1, updatedAmount);
-
-        // Execute the update
-        int rowsUpdated = stmt.executeUpdate();
-        System.out.println("Rows updated in " + tableName + ": " + rowsUpdated);
-
-        if (rowsUpdated > 0) {
-            JOptionPane.showMessageDialog(this, fuelType + " stock updated successfully!");
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to update " + fuelType + " stock in the database.");
-        }
-    } catch (Exception e) {
-        e.printStackTrace();
-        JOptionPane.showMessageDialog(this, "Error updating " + fuelType + " stock in database: " + e.getMessage());
-    }
-}
 
 
 

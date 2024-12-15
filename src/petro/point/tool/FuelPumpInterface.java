@@ -1,7 +1,7 @@
 
 package petro.point.tool;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
+import java.sql.*;
+
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -10,6 +10,12 @@ import javax.swing.JOptionPane;
 public class FuelPumpInterface extends javax.swing.JFrame {
     
      private PetroPointInterface petroPointInterface;
+
+    private static class con {
+
+        public con() {
+        }
+    }
      
   
 
@@ -37,21 +43,19 @@ public class FuelPumpInterface extends javax.swing.JFrame {
 
         // Add a transaction to the linked list
         public void addTransaction(String fuelType, int amount) {
-            String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
-            TransactionNode newNode = new TransactionNode(fuelType, amount, dateTime);
+    String dateTime = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+    TransactionNode newNode = new TransactionNode(fuelType, amount, dateTime);
 
-            if (head == null) {
-                head = tail = newNode;
-                petroPointInterface.reduceFuelStock(fuelType, amount);
-            } else {
-                tail.next = newNode;
-                tail = newNode;
-                petroPointInterface.reduceFuelStock(fuelType, amount);
-            }
+    if (head == null) {
+        head = tail = newNode;
+    } else {
+        tail.next = newNode;
+        tail = newNode;
+    }
 
-            // Save the transaction to the database
-            saveTransactionToDatabase(fuelType, amount, dateTime);
-        }
+    // Perform database operations (insert and update) in a transactional way
+    performDatabaseOperations(fuelType, amount, dateTime);
+    }
 
         // Display all transactions
         public void displayTransactions() {
@@ -63,29 +67,74 @@ public class FuelPumpInterface extends javax.swing.JFrame {
         }
 
         // Save transaction to database
-        private void saveTransactionToDatabase(String fuelType, int amount, String dateTime) {
-            String tableName = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
+       private void performDatabaseOperations(String fuelType, int amount, String dateTime) {
+    String pumpTable = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
+    String stockTable = fuelType.equals("Petrol") ? "petrolstock" : "dieselstock";
 
-            try (Connection con = DBConnection.getdbconnection();
-                 PreparedStatement stmt = con.prepareStatement(
-                         "INSERT INTO " + tableName + " (amount, datetime) VALUES (?, ?)")) {
+    try (Connection con = DBConnection.getdbconnection()) {
+        // Start a transaction
+        con.setAutoCommit(false);
 
-                stmt.setInt(1, amount);
-                stmt.setString(2, dateTime);
-
-                int rowsInserted = stmt.executeUpdate();
-                System.out.println("Rows inserted in " + tableName + ": " + rowsInserted);
-
-                if (rowsInserted > 0) {
-                    System.out.println("Transaction saved successfully in " + tableName);
-                } else {
-                    System.out.println("Failed to save transaction in " + tableName);
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                JOptionPane.showMessageDialog(null, "Error saving transaction to database: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-            }
+        // Insert into pump table
+        try (PreparedStatement insertStmt = con.prepareStatement(
+                "INSERT INTO " + pumpTable + " (amount, datetime) VALUES (?, ?)")) {
+            insertStmt.setInt(1, amount);
+            insertStmt.setString(2, dateTime);
+            insertStmt.executeUpdate();
         }
+
+        // Deduct stock row by row
+        deductStock(con, stockTable, amount);
+
+        // Commit the transaction if both operations succeed
+        con.commit();
+        System.out.println("Transaction successfully inserted and stock updated.");
+    } catch (Exception e) {
+        e.printStackTrace();
+        try {
+            // Roll back if there is an issue
+            //con.rollback();
+            JOptionPane.showMessageDialog(null, "Error occurred, transaction rolled back: " + e.getMessage(),
+                    "Database Error", JOptionPane.ERROR_MESSAGE);
+        } catch (Exception rollbackEx) {
+            rollbackEx.printStackTrace();
+        }
+    }
+}
+
+// Deduct stock row by row
+private void deductStock(Connection con, String stockTable, int amountToDeduct) throws Exception {
+    // Query to get rows without any specific ordering
+    String fetchStockQuery = "SELECT psid, amount FROM " + stockTable + " ORDER BY psid DESC";
+
+    try (PreparedStatement fetchStmt = con.prepareStatement(fetchStockQuery);
+         ResultSet rs = fetchStmt.executeQuery()) {
+
+        while (rs.next() && amountToDeduct > 0) {
+            int id = rs.getInt("psid");
+            int currentAmount = rs.getInt("amount");
+
+            // Determine the deduction amount for this row
+            int deduction = Math.min(amountToDeduct, currentAmount);
+
+            // Update the current row's stock
+            try (PreparedStatement updateStmt = con.prepareStatement(
+                    "UPDATE " + stockTable + " SET amount = amount - ? WHERE psid = ?")) {
+                updateStmt.setInt(1, deduction);
+                updateStmt.setInt(2, id);
+                updateStmt.executeUpdate();
+            }
+
+            // Reduce the remaining amount to deduct
+            amountToDeduct -= deduction;
+        }
+
+        if (amountToDeduct > 0) {
+            throw new Exception("Not enough stock available to fulfill the request.");
+        }
+    }
+}
+
     }
 
     private FuelTransactionList transactionList = new FuelTransactionList();
