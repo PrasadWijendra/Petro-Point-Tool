@@ -46,6 +46,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
     }
     
    public void RefillFuel(String fuelType, int fuelAmount) {
+       
         int currentStock = fuelType.equals("Petrol") ? petrolStock[0] : dieselStock[0]; // Get current stock based on fuel type
 
         if (currentStock + fuelAmount > 10000) {
@@ -92,6 +93,55 @@ public class PetroPointInterface extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error adding new stock row for " + fuelType + " in database: " + e.getMessage());
         }
     }
+  
+  // Method to reduce fuel stock after pumping
+    public void reduceFuelStock(String fuelType, int fuelAmount) {
+        if (fuelType.equals("Petrol")) {
+            if (petrolStock[0] >= fuelAmount) {
+                petrolStock[0] -= fuelAmount;
+                System.out.println("Pumped Petrol. Updated Petrol stock: " + petrolStock[0]);
+            } else {
+                System.out.println("Not enough Petrol in stock!");
+            }
+        } else if (fuelType.equals("Diesel")) {
+            if (dieselStock[0] >= fuelAmount) {
+                dieselStock[0] -= fuelAmount;
+                System.out.println("Pumped Diesel. Updated Diesel stock: " + dieselStock[0]);
+            } else {
+                System.out.println("Not enough Diesel in stock!");
+            }
+        }
+    }
+    
+    private void updateStockInDatabase(String fuelType, int updatedAmount) {
+    // Determine the target table based on fuel type
+    String tableName = fuelType.equals("Petrol") ? "petrolstock" : "dieselstock";
+
+    try (Connection con = DBConnection.getdbconnection();
+         PreparedStatement stmt = con.prepareStatement(
+                 "UPDATE " + tableName + " SET amount = ?")) {
+
+        // Set the updated stock amount
+        stmt.setInt(1, updatedAmount);
+
+        // Execute the update
+        int rowsUpdated = stmt.executeUpdate();
+        System.out.println("Rows updated in " + tableName + ": " + rowsUpdated);
+
+        if (rowsUpdated > 0) {
+            JOptionPane.showMessageDialog(this, fuelType + " stock updated successfully!");
+        } else {
+            JOptionPane.showMessageDialog(this, "Failed to update " + fuelType + " stock in the database.");
+        }
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error updating " + fuelType + " stock in database: " + e.getMessage());
+    }
+}
+
+
+
+
 
             
     /**

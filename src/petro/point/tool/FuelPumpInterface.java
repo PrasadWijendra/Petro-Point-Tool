@@ -8,9 +8,14 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 
 public class FuelPumpInterface extends javax.swing.JFrame {
+    
+     private PetroPointInterface petroPointInterface;
+     
+  
 
     // Node for Singly Linked List
     class TransactionNode {
+        
         String fuelType;
         double amount;
         String dateTime;
@@ -28,6 +33,7 @@ public class FuelPumpInterface extends javax.swing.JFrame {
     class FuelTransactionList {
         TransactionNode head;
         TransactionNode tail;
+        
 
         // Add a transaction to the linked list
         public void addTransaction(String fuelType, int amount) {
@@ -36,9 +42,11 @@ public class FuelPumpInterface extends javax.swing.JFrame {
 
             if (head == null) {
                 head = tail = newNode;
+                petroPointInterface.reduceFuelStock(fuelType, amount);
             } else {
                 tail.next = newNode;
                 tail = newNode;
+                petroPointInterface.reduceFuelStock(fuelType, amount);
             }
 
             // Save the transaction to the database
@@ -84,6 +92,8 @@ public class FuelPumpInterface extends javax.swing.JFrame {
 
     public FuelPumpInterface() {
         initComponents();
+        
+        petroPointInterface = new PetroPointInterface();
     }
 
     @SuppressWarnings("unchecked")
