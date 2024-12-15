@@ -2,7 +2,6 @@
 package petro.point.tool;
 import java.sql.*;
 
-
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
@@ -17,8 +16,6 @@ public class FuelPumpInterface extends javax.swing.JFrame {
         }
     }
      
-  
-
     // Node for Singly Linked List
     class TransactionNode {
         
@@ -68,20 +65,28 @@ public class FuelPumpInterface extends javax.swing.JFrame {
 
         // Save transaction to database
        private void performDatabaseOperations(String fuelType, int amount, String dateTime) {
-    String pumpTable = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
-    String stockTable = fuelType.equals("Petrol") ? "petrolstock" : "dieselstock";
+        String pumpTable;
+            String stockTable;
 
-    try (Connection con = DBConnection.getdbconnection()) {
-        // Start a transaction
-        con.setAutoCommit(false);
+   if (fuelType.equals("Petrol")) {
+                pumpTable = "petrolpump";
+                stockTable = "petrolstock";
+            } else {
+                pumpTable = "dieselpump";
+                stockTable = "dieselstock";
+            }
 
-        // Insert into pump table
-        try (PreparedStatement insertStmt = con.prepareStatement(
-                "INSERT INTO " + pumpTable + " (amount, datetime) VALUES (?, ?)")) {
-            insertStmt.setInt(1, amount);
-            insertStmt.setString(2, dateTime);
-            insertStmt.executeUpdate();
-        }
+            try (Connection con = DBConnection.getdbconnection()) {
+                // Start a transaction
+                con.setAutoCommit(false);
+
+                // Insert into pump table
+                try (PreparedStatement insertStmt = con.prepareStatement(
+                        "INSERT INTO " + pumpTable + " (amount, datetime) VALUES (?, ?)")) {
+                    insertStmt.setInt(1, amount);
+                    insertStmt.setString(2, dateTime);
+                    insertStmt.executeUpdate();
+                }
 
         // Deduct stock row by row
         deductStock(con, stockTable, amount);
@@ -105,25 +110,34 @@ public class FuelPumpInterface extends javax.swing.JFrame {
 // Deduct stock row by row
 private void deductStock(Connection con, String stockTable, int amountToDeduct) throws Exception {
     // Query to get rows without any specific ordering
-    String fetchStockQuery = "SELECT psid, amount FROM " + stockTable + " ORDER BY psid DESC";
-
-    try (PreparedStatement fetchStmt = con.prepareStatement(fetchStockQuery);
-         ResultSet rs = fetchStmt.executeQuery()) {
-
-        while (rs.next() && amountToDeduct > 0) {
-            int id = rs.getInt("psid");
-            int currentAmount = rs.getInt("amount");
-
-            // Determine the deduction amount for this row
-            int deduction = Math.min(amountToDeduct, currentAmount);
-
-            // Update the current row's stock
-            try (PreparedStatement updateStmt = con.prepareStatement(
-                    "UPDATE " + stockTable + " SET amount = amount - ? WHERE psid = ?")) {
-                updateStmt.setInt(1, deduction);
-                updateStmt.setInt(2, id);
-                updateStmt.executeUpdate();
+    String fetchStockQuery;
+            String idColumn;
+            
+if (stockTable.equals("petrolstock")) {
+                fetchStockQuery = "SELECT psid, amount FROM " + stockTable + " ORDER BY psid DESC";
+                idColumn = "psid";
+            } else {
+                fetchStockQuery = "SELECT dsid, amount FROM " + stockTable + " ORDER BY dsid DESC";
+                idColumn = "dsid";
             }
+
+   try (PreparedStatement fetchStmt = con.prepareStatement(fetchStockQuery);
+                 ResultSet rs = fetchStmt.executeQuery()) {
+
+                while (rs.next() && amountToDeduct > 0) {
+                    int id = rs.getInt(idColumn);
+                    int currentAmount = rs.getInt("amount");
+
+                    // Determine the deduction amount for this row
+                    int deduction = Math.min(amountToDeduct, currentAmount);
+
+                    // Update the current row's stock
+                    try (PreparedStatement updateStmt = con.prepareStatement(
+                            "UPDATE " + stockTable + " SET amount = amount - ? WHERE " + idColumn + " = ?")) {
+                        updateStmt.setInt(1, deduction);
+                        updateStmt.setInt(2, id);
+                        updateStmt.executeUpdate();
+                    }
 
             // Reduce the remaining amount to deduct
             amountToDeduct -= deduction;
