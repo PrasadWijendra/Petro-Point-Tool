@@ -91,6 +91,8 @@ public class PetroPointInterface extends javax.swing.JFrame {
                 recordPetrolStockTransaction(fuelAmount);
             } else {
                 
+                recordDieselStockTransaction(fuelAmount);
+                
             }
         } else {
             JOptionPane.showMessageDialog(this, "Failed to add new stock row for " + fuelType);
@@ -115,6 +117,23 @@ public class PetroPointInterface extends javax.swing.JFrame {
     } catch (Exception e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error recording petrol transaction: " + e.getMessage());
+    }
+}
+  
+ private void recordDieselStockTransaction(int fuelAmount) {
+    try (Connection con = DBConnection.getdbconnection();
+         PreparedStatement stmt = con.prepareStatement(
+                 "INSERT INTO dieselstocktable (amount, datetime) VALUES (?, ?)")) {
+
+        stmt.setInt(1, fuelAmount);
+        stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+
+        stmt.executeUpdate();
+        System.out.println("Transaction recorded in dieselstocktable: " + fuelAmount);
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(this, "Error recording diesel transaction: " + e.getMessage());
     }
 }
   
