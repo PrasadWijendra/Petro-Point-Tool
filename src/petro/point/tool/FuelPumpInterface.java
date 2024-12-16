@@ -270,7 +270,7 @@ if (stockTable.equals("petrolstock")) {
         jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 140, 20));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel5.setText("Fuel Type");
+        jLabel5.setText("Select Fuel Type");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 80, 20));
 
         btn_back.setBackground(new java.awt.Color(178, 0, 0));
@@ -296,23 +296,23 @@ if (stockTable.equals("petrolstock")) {
         jPanel1.add(btn_clr, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 160, 40));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 640, 10));
 
-        jLabel6.setText("Max Pump ");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, 30));
+        jLabel6.setText("Maximum Pump Value");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 130, 30));
 
-        jLabel7.setText("Min Pump");
+        jLabel7.setText("Minimum Pump Value");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, 30));
 
-        jLabel8.setText("Avarage Pump");
+        jLabel8.setText("Average Pump Value");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, 30));
 
         maxpump_txt.setEditable(false);
-        jPanel1.add(maxpump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 110, -1));
+        jPanel1.add(maxpump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 110, -1));
 
         minpump_txt.setEditable(false);
-        jPanel1.add(minpump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 110, -1));
+        jPanel1.add(minpump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 110, -1));
 
         avaragepump_txt.setEditable(false);
-        jPanel1.add(avaragepump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 110, -1));
+        jPanel1.add(avaragepump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 110, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 500));
 
