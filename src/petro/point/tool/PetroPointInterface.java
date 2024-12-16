@@ -46,12 +46,12 @@ public class PetroPointInterface extends javax.swing.JFrame {
         }
     }
     
+   // Update available stock and free stock
     private void updateStockDisplay(String fuelType) {
         try {
             int availableStock = 0;
-
-            // Query based on fuel type
             String tableName = fuelType.equals("Petrol") ? "petrolstock" : "dieselstock";
+
             Statement st = DBConnection.getdbconnection().createStatement();
             ResultSet rs = st.executeQuery("SELECT SUM(amount) AS TotalAmount FROM " + tableName);
 
@@ -59,11 +59,10 @@ public class PetroPointInterface extends javax.swing.JFrame {
                 availableStock = rs.getInt("TotalAmount");
             }
 
-            // Calculate free stock
-            int totalCapacity = 10000;
+            int totalCapacity = 10000; // Maximum capacity
             int freeStock = totalCapacity - availableStock;
 
-            // Update JTextFields
+            // Update text fields
             availablestock_txt.setText(String.valueOf(availableStock));
             spacestock_txt.setText(String.valueOf(freeStock));
 
@@ -72,28 +71,28 @@ public class PetroPointInterface extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(this, "Error updating stock display!");
         }
     }
+
     
-   public void RefillFuel(String fuelType, int fuelAmount) {
-       
-        int currentStock = fuelType.equals("Petrol") ? petrolStock[0] : dieselStock[0]; // Get current stock based on fuel type
+    // Refill fuel
+    public void RefillFuel(String fuelType, int fuelAmount) {
+        int currentStock = fuelType.equals("Petrol") ? petrolStock[0] : dieselStock[0];
 
         if (currentStock + fuelAmount > 10000) {
-            int canAdd = 10000 - currentStock; // Maximum additional fuel that can be added
+            int canAdd = 10000 - currentStock;
             JOptionPane.showMessageDialog(this, "Cannot refill more than 10,000 for " + fuelType + "! Can add only: " + canAdd);
         } else {
-            // Update the appropriate stock value
             if (fuelType.equals("Petrol")) {
                 petrolStock[0] += fuelAmount;
-                addNewStockRowToDatabase("Petrol", fuelAmount); // Update petrol stock
+                addNewStockRowToDatabase("Petrol", fuelAmount);
             } else if (fuelType.equals("Diesel")) {
                 dieselStock[0] += fuelAmount;
-                addNewStockRowToDatabase("Diesel", fuelAmount); // Update diesel stock
+                addNewStockRowToDatabase("Diesel", fuelAmount);
             }
 
-            System.out.println("Petrol stock value: " + petrolStock[0]);
-            System.out.println("Diesel stock value: " + dieselStock[0]);
+            updateStockDisplay(fuelType); // Refresh stock display
         }
     }
+
 
   private void addNewStockRowToDatabase(String fuelType, int fuelAmount) {
       
@@ -325,16 +324,19 @@ public class PetroPointInterface extends javax.swing.JFrame {
 
     private void btn_refillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refillActionPerformed
          try {
-            int fuelAmount = Integer.parseInt(Refill_text.getText()); // Get input from the text field
-            String selectedFuelType = FuelType_Combo.getSelectedItem().toString(); // Get selected fuel type
-            RefillFuel(selectedFuelType, fuelAmount); // Refill the selected fuel type with the given amount
+            int fuelAmount = Integer.parseInt(Refill_text.getText());
+            String selectedFuelType = FuelType_Combo.getSelectedItem().toString();
+            RefillFuel(selectedFuelType, fuelAmount);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid number.");
         }
+
     }//GEN-LAST:event_btn_refillActionPerformed
 
     private void FuelType_ComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_ComboActionPerformed
-        
+         String selectedFuelType = FuelType_Combo.getSelectedItem().toString();
+        updateStockDisplay(selectedFuelType);
+
     }//GEN-LAST:event_FuelType_ComboActionPerformed
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
