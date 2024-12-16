@@ -174,6 +174,8 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
+        btn_back = new javax.swing.JButton();
+        btn_clr = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -189,20 +191,22 @@ public class PetroPointInterface extends javax.swing.JFrame {
             }
         });
         jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 140, 40));
+
+        Refill_text.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jPanel1.add(Refill_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 140, 40));
 
-        btn_refill.setBackground(new java.awt.Color(204, 0, 0));
+        btn_refill.setBackground(new java.awt.Color(178, 0, 0));
         btn_refill.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_refill.setForeground(new java.awt.Color(255, 255, 255));
-        btn_refill.setText("Refill");
+        btn_refill.setText("ReFill");
         btn_refill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_refillActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_refill, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 420, 160, 40));
+        jPanel1.add(btn_refill, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 430, 170, 40));
 
-        jPanel2.setBackground(new java.awt.Color(204, 0, 0));
+        jPanel2.setBackground(new java.awt.Color(178, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -211,7 +215,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 40));
 
-        jPanel3.setBackground(new java.awt.Color(204, 0, 0));
+        jPanel3.setBackground(new java.awt.Color(178, 0, 0));
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 490, 670, 30));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -226,6 +230,28 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jLabel2.setForeground(new java.awt.Color(255, 51, 51));
         jLabel2.setText("Size of Tank   :  10 000L");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 140, -1));
+
+        btn_back.setBackground(new java.awt.Color(178, 0, 0));
+        btn_back.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_back.setForeground(new java.awt.Color(255, 255, 255));
+        btn_back.setText("Back");
+        btn_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_backActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 170, 40));
+
+        btn_clr.setBackground(new java.awt.Color(178, 0, 0));
+        btn_clr.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_clr.setForeground(new java.awt.Color(255, 255, 255));
+        btn_clr.setText("Clear");
+        btn_clr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clrActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_clr, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 170, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -258,6 +284,14 @@ public class PetroPointInterface extends javax.swing.JFrame {
         
     }//GEN-LAST:event_FuelType_ComboActionPerformed
 
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+        new HomePage().setVisible(true);
+    }//GEN-LAST:event_btn_backActionPerformed
+
+    private void btn_clrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clrActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_clrActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -285,6 +319,8 @@ public class PetroPointInterface extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> FuelType_Combo;
     private javax.swing.JTextField Refill_text;
+    private javax.swing.JButton btn_back;
+    private javax.swing.JButton btn_clr;
     private javax.swing.JButton btn_refill;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

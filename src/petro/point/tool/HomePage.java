@@ -39,7 +39,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, 300));
 
-        jButton1.setBackground(new java.awt.Color(204, 0, 0));
+        jButton1.setBackground(new java.awt.Color(178, 0, 0));
         jButton1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton1.setForeground(new java.awt.Color(255, 255, 255));
         jButton1.setText("Fuel Stock");
@@ -50,7 +50,7 @@ public class HomePage extends javax.swing.JFrame {
         });
         getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 140, 60));
 
-        jButton2.setBackground(new java.awt.Color(204, 0, 0));
+        jButton2.setBackground(new java.awt.Color(178, 0, 0));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jButton2.setForeground(new java.awt.Color(255, 255, 255));
         jButton2.setText("Fuel Pump");
@@ -61,7 +61,7 @@ public class HomePage extends javax.swing.JFrame {
         });
         getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 140, 60));
 
-        jPanel2.setBackground(new java.awt.Color(204, 0, 0));
+        jPanel2.setBackground(new java.awt.Color(178, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -70,7 +70,7 @@ public class HomePage extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 350, 40));
 
-        jPanel3.setBackground(new java.awt.Color(204, 0, 0));
+        jPanel3.setBackground(new java.awt.Color(178, 0, 0));
 
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);

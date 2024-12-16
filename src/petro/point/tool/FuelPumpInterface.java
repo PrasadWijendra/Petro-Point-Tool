@@ -159,12 +159,13 @@ if (stockTable.equals("petrolstock")) {
     public FuelPumpInterface() {
         initComponents();
         
-         // Fetch the fuel prices
-    Map<String, String> fuelPrices = FetchFuelPrices.fetchFuelPrices();
+        //******** Fetch the fuel prices*************************
+        Map<String, String> fuelPrices = FetchFuelPrices.fetchFuelPrices();
 
-    // Set the prices in the text fields
-    Pprice_txt.setText(fuelPrices.getOrDefault("Petrol", "Price not available"));
-    Dprice_txt.setText(fuelPrices.getOrDefault("Diesel", "Price not available"));
+        // Set the prices in the text fields
+        Pprice_txt.setText(fuelPrices.getOrDefault("Petrol", "Price not available"));
+        Dprice_txt.setText(fuelPrices.getOrDefault("Diesel", "Price not available"));
+
 
     petroPointInterface = new PetroPointInterface();
         
@@ -190,6 +191,9 @@ if (stockTable.equals("petrolstock")) {
         btn_pump = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        btn_back = new javax.swing.JButton();
+        btn_clr = new javax.swing.JButton();
+        jSeparator1 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -197,7 +201,7 @@ if (stockTable.equals("petrolstock")) {
         jPanel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(204, 0, 0));
+        jPanel2.setBackground(new java.awt.Color(178, 0, 0));
 
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -206,24 +210,26 @@ if (stockTable.equals("petrolstock")) {
 
         jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 40));
 
-        jPanel3.setBackground(new java.awt.Color(204, 0, 0));
+        jPanel3.setBackground(new java.awt.Color(178, 0, 0));
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 660, 50));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel3.setText("Today petrol ");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 70, 100, 20));
+        jLabel3.setText("Today petrol Price : ");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 50, 140, 30));
 
         Pprice_txt.setEditable(false);
         Pprice_txt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jPanel1.add(Pprice_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 60, 160, 40));
+        Pprice_txt.setForeground(new java.awt.Color(255, 0, 0));
+        jPanel1.add(Pprice_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 50, 120, 30));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("Today diesel");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 70, 90, 20));
+        jLabel2.setText("Today diesel Price :");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 50, 140, 30));
 
         Dprice_txt.setEditable(false);
         Dprice_txt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jPanel1.add(Dprice_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, 160, 40));
+        Dprice_txt.setForeground(new java.awt.Color(255, 0, 0));
+        jPanel1.add(Dprice_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, 120, 30));
 
         FuelType_Combo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         FuelType_Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petrol", "Diesel" }));
@@ -234,6 +240,7 @@ if (stockTable.equals("petrolstock")) {
         });
         jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 140, 30));
 
+        pump_text.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         pump_text.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pump_textActionPerformed(evt);
@@ -241,7 +248,7 @@ if (stockTable.equals("petrolstock")) {
         });
         jPanel1.add(pump_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, 140, 30));
 
-        btn_pump.setBackground(new java.awt.Color(204, 0, 0));
+        btn_pump.setBackground(new java.awt.Color(178, 0, 0));
         btn_pump.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_pump.setForeground(new java.awt.Color(255, 255, 255));
         btn_pump.setText("Pump");
@@ -250,7 +257,7 @@ if (stockTable.equals("petrolstock")) {
                 btn_pumpActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_pump, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 410, 160, 40));
+        jPanel1.add(btn_pump, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 420, 160, 40));
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Enter Pump Amount");
@@ -259,6 +266,29 @@ if (stockTable.equals("petrolstock")) {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Fuel Type");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 80, 20));
+
+        btn_back.setBackground(new java.awt.Color(178, 0, 0));
+        btn_back.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_back.setForeground(new java.awt.Color(255, 255, 255));
+        btn_back.setText("Back");
+        btn_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_backActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 160, 40));
+
+        btn_clr.setBackground(new java.awt.Color(178, 0, 0));
+        btn_clr.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_clr.setForeground(new java.awt.Color(255, 255, 255));
+        btn_clr.setText("Clear");
+        btn_clr.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_clrActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_clr, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 160, 40));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 640, 10));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 500));
 
@@ -288,6 +318,14 @@ if (stockTable.equals("petrolstock")) {
         // TODO add your handling code here:
     }//GEN-LAST:event_pump_textActionPerformed
 
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_backActionPerformed
+
+    private void btn_clrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clrActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btn_clrActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -309,6 +347,8 @@ if (stockTable.equals("petrolstock")) {
     private javax.swing.JTextField Dprice_txt;
     private javax.swing.JComboBox<String> FuelType_Combo;
     private javax.swing.JTextField Pprice_txt;
+    private javax.swing.JButton btn_back;
+    private javax.swing.JButton btn_clr;
     private javax.swing.JButton btn_pump;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -318,6 +358,7 @@ if (stockTable.equals("petrolstock")) {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField pump_text;
     // End of variables declaration//GEN-END:variables
 }
