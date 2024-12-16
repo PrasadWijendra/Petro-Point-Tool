@@ -173,6 +173,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jPanel3 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -187,10 +188,12 @@ public class PetroPointInterface extends javax.swing.JFrame {
                 FuelType_ComboActionPerformed(evt);
             }
         });
-        jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, 140, 40));
-        jPanel1.add(Refill_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 140, 40));
+        jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 140, 40));
+        jPanel1.add(Refill_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 140, 40));
 
+        btn_refill.setBackground(new java.awt.Color(204, 0, 0));
         btn_refill.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        btn_refill.setForeground(new java.awt.Color(255, 255, 255));
         btn_refill.setText("Refill");
         btn_refill.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -218,6 +221,11 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Fuel Type");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 90, -1));
+
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(255, 51, 51));
+        jLabel2.setText("Size of Tank   :  10 000L");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 140, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -279,6 +287,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
     private javax.swing.JTextField Refill_text;
     private javax.swing.JButton btn_refill;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
