@@ -17,6 +17,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
            dieselStock = new int[1]; // Fixed size for diesel queue
         initComponents();
         loadFuelStocksFromDatabase(); // Load both petrol and diesel stocks from the database
+        updateStockDisplay("Petrol");
     }
     
     private void loadFuelStocksFromDatabase() {
@@ -42,6 +43,33 @@ public class PetroPointInterface extends javax.swing.JFrame {
         } catch (Exception e) {
             e.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error loading fuel stocks from database!");
+        }
+    }
+    
+    private void updateStockDisplay(String fuelType) {
+        try {
+            int availableStock = 0;
+
+            // Query based on fuel type
+            String tableName = fuelType.equals("Petrol") ? "petrolstock" : "dieselstock";
+            Statement st = DBConnection.getdbconnection().createStatement();
+            ResultSet rs = st.executeQuery("SELECT SUM(amount) AS TotalAmount FROM " + tableName);
+
+            if (rs.next()) {
+                availableStock = rs.getInt("TotalAmount");
+            }
+
+            // Calculate free stock
+            int totalCapacity = 10000;
+            int freeStock = totalCapacity - availableStock;
+
+            // Update JTextFields
+            availablestock_txt.setText(String.valueOf(availableStock));
+            spacestock_txt.setText(String.valueOf(freeStock));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error updating stock display!");
         }
     }
     
