@@ -1,22 +1,99 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
-package petro.point.tool;
 
-/**
- *
- * @author SITHIJA SANKALPA
- */
+package petro.point.tool;
+import java.sql.*;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import javax.swing.JOptionPane;
+
+
 public class fuelForcast extends javax.swing.JFrame {
 
-    /**
-     * Creates new form fuelForcast
-     */
+   
     public fuelForcast() {
         initComponents();
     }
+    
+private void generateForecast() {
+        String forecastPeriod = jComboBox1.getSelectedItem().toString(); // Weekly/Monthly
+        String fuelType = jComboBox2.getSelectedItem().toString(); // Petrol/Diesel
 
+        String pumpTable = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
+        String stockTable = fuelType.equals("Petrol") ? "petrolstock" : "dieselstock";
+
+        int totalUsage = 0;
+        int availableStock = getAvailableStock(stockTable);
+
+        try (Connection con = DBConnection.getdbconnection();
+             PreparedStatement stmt = con.prepareStatement(generateQuery(pumpTable, forecastPeriod))) {
+
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                totalUsage += rs.getInt("amount");
+            }
+
+            // Calculate forecast based on average usage
+            int days = forecastPeriod.equals("Weekly") ? 7 : 30;
+            int averageUsagePerDay = totalUsage / days;
+            int requiredFuel = averageUsagePerDay * days;
+
+            // Set the calculated forecast into the text field
+            jTextField1.setText(String.valueOf(requiredFuel));
+
+            // Show a message if available stock is low
+            if (availableStock < requiredFuel) {
+                JOptionPane.showMessageDialog(this, "Warning: Fuel stock is insufficient! Required: "
+                        + requiredFuel + "L, Available: " + availableStock + "L", "Low Stock Warning", JOptionPane.WARNING_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error generating forecast: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    // Helper method to generate SQL query
+    private String generateQuery(String pumpTable, String forecastPeriod) {
+        LocalDate startDate;
+
+        if (forecastPeriod.equals("Weekly")) {
+            startDate = LocalDate.now().minusWeeks(1);
+        } else {
+            startDate = LocalDate.now().minusMonths(1);
+        }
+
+        String formattedDate = startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+        return "SELECT amount FROM " + pumpTable + " WHERE datetime >= '" + formattedDate + "'";
+    }
+
+    // Helper method to get available stock from stock table
+    private int getAvailableStock(String stockTable) {
+        int availableStock = 0;
+
+        // Get the database connection from DBConnection class
+        Connection con = DBConnection.getdbconnection(); // Call the DBConnection class to get the connection
+        
+        // Check if the connection is null (i.e., failed to establish a connection)
+        if (con == null) {
+            JOptionPane.showMessageDialog(this, "Database connection failed.");
+            return availableStock;  // Return 0 if no connection
+        }
+
+        try {
+            // SQL query to get the available stock
+            String query = "SELECT SUM(amount) AS TotalStock FROM " + stockTable;
+            try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+                if (rs.next()) {
+                    availableStock = rs.getInt("TotalStock");
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error fetching available stock: " + e.getMessage());
+            e.printStackTrace();
+        }
+
+        return availableStock;
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -49,6 +126,11 @@ public class fuelForcast extends javax.swing.JFrame {
 
         btn_generateForcast.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         btn_generateForcast.setText("Generate Forcast");
+        btn_generateForcast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_generateForcastActionPerformed(evt);
+            }
+        });
         jPanel1.add(btn_generateForcast, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 400, 160, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -85,6 +167,10 @@ public class fuelForcast extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btn_generateForcastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_generateForcastActionPerformed
+        generateForecast();
+    }//GEN-LAST:event_btn_generateForcastActionPerformed
 
     /**
      * @param args the command line arguments
