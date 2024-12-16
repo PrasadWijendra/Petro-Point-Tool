@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter;
 import javax.swing.JOptionPane;
 import petro.point.tool.FetchFuelPrices;
 import javax.swing.*;
-import java.util.Map;
+import java.util.*;
 
 public class FuelPumpInterface extends javax.swing.JFrame {
     
@@ -158,6 +158,7 @@ if (stockTable.equals("petrolstock")) {
 
     public FuelPumpInterface() {
         initComponents();
+        calculatePumpStats("Petrol");
         
         //******** Fetch the fuel prices*************************
         Map<String, String> fuelPrices = FetchFuelPrices.fetchFuelPrices();
@@ -170,6 +171,65 @@ if (stockTable.equals("petrolstock")) {
     petroPointInterface = new PetroPointInterface();
         
         petroPointInterface = new PetroPointInterface();
+    }
+    
+    private void calculatePumpStats(String fuelType) {
+        String pumpTable = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
+        ArrayList<Integer> pumpAmounts = new ArrayList<>();
+
+        // Step 1: Fetch Data from Database
+        try (Connection con = DBConnection.getdbconnection();
+             PreparedStatement stmt = con.prepareStatement("SELECT amount FROM " + pumpTable);
+             ResultSet rs = stmt.executeQuery()) {
+            while (rs.next()) {
+                pumpAmounts.add(rs.getInt("amount"));
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error fetching pump data: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
+        if (pumpAmounts.isEmpty()) {
+            minpump_txt.setText("0");
+            maxpump_txt.setText("0");
+            avaragepump_txt.setText("0.00");
+            return;
+        }
+
+        // Step 2: Sort the Data
+        quickSort(pumpAmounts, 0, pumpAmounts.size() - 1);
+
+        // Step 3: Calculate Min, Max, and Average
+        int min = pumpAmounts.get(0);
+        int max = pumpAmounts.get(pumpAmounts.size() - 1);
+        double average = pumpAmounts.stream().mapToDouble(Integer::doubleValue).average().orElse(0);
+
+        // Step 4: Display in JTextFields
+        minpump_txt.setText(String.valueOf(min));
+        maxpump_txt.setText(String.valueOf(max));
+        avaragepump_txt.setText(String.format("%.2f", average));
+    }
+
+    // QuickSort Implementation
+    private void quickSort(ArrayList<Integer> list, int low, int high) {
+        if (low < high) {
+            int pivotIndex = partition(list, low, high);
+            quickSort(list, low, pivotIndex - 1);
+            quickSort(list, pivotIndex + 1, high);
+        }
+    }
+
+    private int partition(ArrayList<Integer> list, int low, int high) {
+        int pivot = list.get(high);
+        int i = low - 1;
+        for (int j = low; j < high; j++) {
+            if (list.get(j) <= pivot) {
+                i++;
+                Collections.swap(list, i, j);
+            }
+        }
+        Collections.swap(list, i + 1, high);
+        return i + 1;
     }
  
 
