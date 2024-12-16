@@ -55,6 +55,7 @@ public class FuelPumpInterface extends javax.swing.JFrame {
 
     // Perform database operations (insert and update) in a transactional way
     performDatabaseOperations(fuelType, amount, dateTime);
+    calculatePumpStats(fuelType); 
     }
 
         // Display all transactions
@@ -381,7 +382,8 @@ if (stockTable.equals("petrolstock")) {
     }// </editor-fold>//GEN-END:initComponents
 
     private void FuelType_ComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_ComboActionPerformed
-
+        String fuelType = FuelType_Combo.getSelectedItem().toString();
+        calculatePumpStats(fuelType);
     }//GEN-LAST:event_FuelType_ComboActionPerformed
 
     private void btn_pumpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pumpActionPerformed
