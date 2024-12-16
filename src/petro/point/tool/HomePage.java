@@ -32,6 +32,7 @@ public class HomePage extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
+        btn_fuelforcast = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -59,7 +60,7 @@ public class HomePage extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 170, 140, 60));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 140, 60));
 
         jPanel2.setBackground(new java.awt.Color(178, 0, 0));
 
@@ -85,6 +86,17 @@ public class HomePage extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 350, 20));
 
+        btn_fuelforcast.setBackground(new java.awt.Color(204, 0, 0));
+        btn_fuelforcast.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btn_fuelforcast.setForeground(new java.awt.Color(255, 255, 255));
+        btn_fuelforcast.setText("Fuel Forcast");
+        btn_fuelforcast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_fuelforcastActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_fuelforcast, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 150, 60));
+
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
@@ -96,6 +108,10 @@ public class HomePage extends javax.swing.JFrame {
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
        new FuelPumpInterface().setVisible(true);
     }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void btn_fuelforcastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fuelforcastActionPerformed
+        new fuelForcast().setVisible(true);
+    }//GEN-LAST:event_btn_fuelforcastActionPerformed
 
     /**
      * @param args the command line arguments
@@ -133,6 +149,7 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_fuelforcast;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JLabel jLabel1;
