@@ -194,6 +194,12 @@ if (stockTable.equals("petrolstock")) {
         btn_back = new javax.swing.JButton();
         btn_clr = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        maxpump_txt = new javax.swing.JTextField();
+        minpump_txt = new javax.swing.JTextField();
+        avaragepump_txt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -238,7 +244,7 @@ if (stockTable.equals("petrolstock")) {
                 FuelType_ComboActionPerformed(evt);
             }
         });
-        jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 130, 140, 30));
+        jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 140, 30));
 
         pump_text.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         pump_text.addActionListener(new java.awt.event.ActionListener() {
@@ -246,7 +252,7 @@ if (stockTable.equals("petrolstock")) {
                 pump_textActionPerformed(evt);
             }
         });
-        jPanel1.add(pump_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, 140, 30));
+        jPanel1.add(pump_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, 140, 30));
 
         btn_pump.setBackground(new java.awt.Color(178, 0, 0));
         btn_pump.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -261,11 +267,11 @@ if (stockTable.equals("petrolstock")) {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Enter Pump Amount");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 140, 20));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 140, 20));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Fuel Type");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 80, 20));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 80, 20));
 
         btn_back.setBackground(new java.awt.Color(178, 0, 0));
         btn_back.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -289,6 +295,24 @@ if (stockTable.equals("petrolstock")) {
         });
         jPanel1.add(btn_clr, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 160, 40));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 640, 10));
+
+        jLabel6.setText("Max Pump ");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, -1, 30));
+
+        jLabel7.setText("Min Pump");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, 30));
+
+        jLabel8.setText("Avarage Pump");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, 30));
+
+        maxpump_txt.setEditable(false);
+        jPanel1.add(maxpump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 100, 110, -1));
+
+        minpump_txt.setEditable(false);
+        jPanel1.add(minpump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 140, 110, -1));
+
+        avaragepump_txt.setEditable(false);
+        jPanel1.add(avaragepump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 180, 110, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 500));
 
@@ -347,6 +371,7 @@ if (stockTable.equals("petrolstock")) {
     private javax.swing.JTextField Dprice_txt;
     private javax.swing.JComboBox<String> FuelType_Combo;
     private javax.swing.JTextField Pprice_txt;
+    private javax.swing.JTextField avaragepump_txt;
     private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_clr;
     private javax.swing.JButton btn_pump;
@@ -355,10 +380,15 @@ if (stockTable.equals("petrolstock")) {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField maxpump_txt;
+    private javax.swing.JTextField minpump_txt;
     private javax.swing.JTextField pump_text;
     // End of variables declaration//GEN-END:variables
 }

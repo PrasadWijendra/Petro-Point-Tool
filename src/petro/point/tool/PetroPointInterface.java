@@ -176,6 +176,11 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         btn_back = new javax.swing.JButton();
         btn_clr = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
+        availablestock_txt = new javax.swing.JTextField();
+        spacestock_txt = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -229,7 +234,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 51, 51));
         jLabel2.setText("Size of Tank   :  10 000L");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 60, 140, -1));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, 140, -1));
 
         btn_back.setBackground(new java.awt.Color(178, 0, 0));
         btn_back.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -252,6 +257,26 @@ public class PetroPointInterface extends javax.swing.JFrame {
             }
         });
         jPanel1.add(btn_clr, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 170, 40));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setText("Available Stock");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 110, -1, -1));
+
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel6.setText("Space Stock");
+        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, -1, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, 190, 10));
+
+        availablestock_txt.setEditable(false);
+        availablestock_txt.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                availablestock_txtActionPerformed(evt);
+            }
+        });
+        jPanel1.add(availablestock_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 100, 110, 30));
+
+        spacestock_txt.setEditable(false);
+        jPanel1.add(spacestock_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 150, 110, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -292,6 +317,10 @@ public class PetroPointInterface extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_clrActionPerformed
 
+    private void availablestock_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availablestock_txtActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_availablestock_txtActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -319,15 +348,20 @@ public class PetroPointInterface extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> FuelType_Combo;
     private javax.swing.JTextField Refill_text;
+    private javax.swing.JTextField availablestock_txt;
     private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_clr;
     private javax.swing.JButton btn_refill;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JTextField spacestock_txt;
     // End of variables declaration//GEN-END:variables
 }
