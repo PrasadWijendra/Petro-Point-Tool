@@ -288,7 +288,7 @@ if (stockTable.equals("petrolstock")) {
         jLabel1.setText("PETRO POINT");
         jPanel2.add(jLabel1);
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 670, 40));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 40));
 
         jPanel3.setBackground(new java.awt.Color(178, 0, 0));
         jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 480, 660, 50));
@@ -326,7 +326,7 @@ if (stockTable.equals("petrolstock")) {
                 pump_textActionPerformed(evt);
             }
         });
-        jPanel1.add(pump_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 330, 140, 30));
+        jPanel1.add(pump_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 370, 140, 30));
 
         btn_pump.setBackground(new java.awt.Color(178, 0, 0));
         btn_pump.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -341,11 +341,11 @@ if (stockTable.equals("petrolstock")) {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Enter Pump Amount");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, 140, 20));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 370, 140, 20));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Select Fuel Type");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 80, 20));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 310, 80, 20));
 
         btn_back.setBackground(new java.awt.Color(178, 0, 0));
         btn_back.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -370,22 +370,28 @@ if (stockTable.equals("petrolstock")) {
         jPanel1.add(btn_clr, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 420, 160, 40));
         jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 640, 10));
 
+        jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Maximum Pump Value");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 130, 30));
 
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("Minimum Pump Value");
         jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, -1, 30));
 
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("Average Pump Value");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, 30));
 
         maxpump_txt.setEditable(false);
+        maxpump_txt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jPanel1.add(maxpump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 100, 110, -1));
 
         minpump_txt.setEditable(false);
+        minpump_txt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jPanel1.add(minpump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 140, 110, -1));
 
         avaragepump_txt.setEditable(false);
+        avaragepump_txt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jPanel1.add(avaragepump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 110, -1));
 
         FuelType_Combo1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -395,8 +401,10 @@ if (stockTable.equals("petrolstock")) {
                 FuelType_Combo1ActionPerformed(evt);
             }
         });
-        jPanel1.add(FuelType_Combo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 140, 30));
+        jPanel1.add(FuelType_Combo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 300, 140, 30));
 
+        pump_valuse_of_date.setEditable(false);
+        pump_valuse_of_date.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         pump_valuse_of_date.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 pump_valuse_of_dateActionPerformed(evt);
@@ -404,6 +412,7 @@ if (stockTable.equals("petrolstock")) {
         });
         jPanel1.add(pump_valuse_of_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 240, 150, -1));
 
+        btn_get_pump_valuse_by_date.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btn_get_pump_valuse_by_date.setText("Search");
         btn_get_pump_valuse_by_date.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -412,17 +421,24 @@ if (stockTable.equals("petrolstock")) {
         });
         jPanel1.add(btn_get_pump_valuse_by_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 330, -1, 20));
         jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 120, 130, -1));
+
+        money_amount_of_fuel.setEditable(false);
+        money_amount_of_fuel.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jPanel1.add(money_amount_of_fuel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, 150, -1));
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Date");
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, 40, -1));
 
+        jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel10.setText("Select Fuel");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 60, -1));
 
+        jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel11.setText("Pump Amount");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 240, -1, -1));
 
+        jLabel12.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel12.setText("Pump amount value");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, -1, -1));
 
@@ -456,11 +472,13 @@ if (stockTable.equals("petrolstock")) {
     }//GEN-LAST:event_pump_textActionPerformed
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
-        // TODO add your handling code here:
+        new HomePage().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_backActionPerformed
 
     private void btn_clrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clrActionPerformed
-        // TODO add your handling code here:
+       pump_text.setText("");
+       jDateChooser2.setDate(null);
     }//GEN-LAST:event_btn_clrActionPerformed
 
     private void FuelType_Combo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_Combo1ActionPerformed
@@ -474,48 +492,56 @@ if (stockTable.equals("petrolstock")) {
     private void btn_get_pump_valuse_by_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_get_pump_valuse_by_dateActionPerformed
     
         // Get the date from the date picker
-    SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd");
-    String date = dformat.format(jDateChooser2.getDate());  // Convert selected date to String
-    
-    // Get the selected fuel type
-    String fuelType = FuelType_Combo_for_calculate.getSelectedItem().toString();
-    String pumpTable = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
-    
-    // Get the price for the selected fuel type
-    double price = fuelType.equals("Petrol") ? Double.parseDouble(Pprice_txt.getText()) : Double.parseDouble(Dprice_txt.getText());
+   // Get the date from the date picker
+SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd");
 
-    // SQL query to fetch pump values for the selected date
-    String query = "SELECT amount FROM " + pumpTable + " WHERE DATE(datetime) = ?";
+if (jDateChooser2.getDate() == null) {
+    JOptionPane.showMessageDialog(null, "Please select a date before proceeding.", "Input Error", JOptionPane.WARNING_MESSAGE);
+    return; // Stop further execution if no date is selected
+}
+
+String date = dformat.format(jDateChooser2.getDate());  // Convert selected date to String
+
+// Get the selected fuel type
+String fuelType = FuelType_Combo_for_calculate.getSelectedItem().toString();
+String pumpTable = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
+
+// Get the price for the selected fuel type
+double price = fuelType.equals("Petrol") ? Double.parseDouble(Pprice_txt.getText()) : Double.parseDouble(Dprice_txt.getText());
+
+// SQL query to fetch pump values for the selected date
+String query = "SELECT amount FROM " + pumpTable + " WHERE DATE(datetime) = ?";
+
+try (Connection con = DBConnection.getdbconnection();
+     PreparedStatement stmt = con.prepareStatement(query)) {
     
-    try (Connection con = DBConnection.getdbconnection();
-         PreparedStatement stmt = con.prepareStatement(query)) {
+    stmt.setString(1, date);  // Set the date in the query
+    
+    try (ResultSet rs = stmt.executeQuery()) {
+        double totalAmount = 0;
         
-        stmt.setString(1, date);  // Set the date in the query
-        
-        try (ResultSet rs = stmt.executeQuery()) {
-            double totalAmount = 0;
-            
-            // Calculate the total amount pumped on the selected date
-            while (rs.next()) {
-                totalAmount += rs.getDouble("amount");
-            }
-            
-            // Calculate the total money for the pumped amount
-            double totalMoney = price * totalAmount;
-            
-            // Set the values in the text fields
-            if (totalAmount > 0) {
-                pump_valuse_of_date.setText("Total pump value: " + totalAmount);
-                money_amount_of_fuel.setText(String.valueOf(totalMoney));  // Set the total money in the text field
-            } else {
-                pump_valuse_of_date.setText("No records found for this date.");
-                money_amount_of_fuel.setText("");  // Clear the money amount field if no records found
-            }
+        // Calculate the total amount pumped on the selected date
+        while (rs.next()) {
+            totalAmount += rs.getDouble("amount");
         }
         
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error fetching pump data: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+        // Calculate the total money for the pumped amount
+        double totalMoney = price * totalAmount;
+        
+        // Set the values in the text fields
+        if (totalAmount > 0) {
+            pump_valuse_of_date.setText("Total pump value: " + totalAmount);
+            money_amount_of_fuel.setText(String.valueOf(totalMoney));  // Set the total money in the text field
+        } else {
+            JOptionPane.showMessageDialog(null, "No records found for this date.", "Information", JOptionPane.INFORMATION_MESSAGE);
+            money_amount_of_fuel.setText("");  // Clear the money amount field if no records found
+        }
     }
+    
+} catch (SQLException e) {
+    JOptionPane.showMessageDialog(null, "Error fetching pump data: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+}
+
 
     }//GEN-LAST:event_btn_get_pump_valuse_by_dateActionPerformed
 

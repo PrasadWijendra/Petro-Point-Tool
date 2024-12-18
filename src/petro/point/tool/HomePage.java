@@ -86,7 +86,7 @@ public class HomePage extends javax.swing.JFrame {
 
         getContentPane().add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 280, 350, 20));
 
-        btn_fuelforcast.setBackground(new java.awt.Color(204, 0, 0));
+        btn_fuelforcast.setBackground(new java.awt.Color(178, 0, 0));
         btn_fuelforcast.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         btn_fuelforcast.setForeground(new java.awt.Color(255, 255, 255));
         btn_fuelforcast.setText("Fuel Forcast");
@@ -95,7 +95,7 @@ public class HomePage extends javax.swing.JFrame {
                 btn_fuelforcastActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_fuelforcast, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 150, 60));
+        getContentPane().add(btn_fuelforcast, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 320, 60));
 
         pack();
         setLocationRelativeTo(null);

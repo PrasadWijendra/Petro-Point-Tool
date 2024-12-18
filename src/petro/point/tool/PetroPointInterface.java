@@ -64,8 +64,8 @@ public class PetroPointInterface extends javax.swing.JFrame {
             int freeStock = totalCapacity - availableStock;
 
             // Update text fields
-            availablestock_txt.setText(String.valueOf(availableStock));
-            spacestock_txt.setText(String.valueOf(freeStock));
+            availablestock_txt.setText(String.valueOf(availableStock+"L"));
+            spacestock_txt.setText(String.valueOf(freeStock+"L"));
 
         } catch (Exception e) {
             e.printStackTrace();
@@ -209,13 +209,13 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         availablestock_txt = new javax.swing.JTextField();
         spacestock_txt = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jSeparator2 = new javax.swing.JSeparator();
+        jPanel4 = new javax.swing.JPanel();
         jDateChooser_for_stock = new com.toedter.calendar.JDateChooser();
-        FuelType_Combo1 = new javax.swing.JComboBox<>();
         added_stock_text_field = new javax.swing.JTextField();
         btn_search__stock_added_by_date = new javax.swing.JButton();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -230,10 +230,10 @@ public class PetroPointInterface extends javax.swing.JFrame {
                 FuelType_Combo_for_stock_by_dateActionPerformed(evt);
             }
         });
-        jPanel1.add(FuelType_Combo_for_stock_by_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 140, 40));
+        jPanel1.add(FuelType_Combo_for_stock_by_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 250, 40));
 
         Refill_text.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jPanel1.add(Refill_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 140, 40));
+        jPanel1.add(Refill_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 260, 140, 40));
 
         btn_refill.setBackground(new java.awt.Color(178, 0, 0));
         btn_refill.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -260,16 +260,16 @@ public class PetroPointInterface extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel4.setText("Enter Refill Amount");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 140, -1));
+        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 310, 140, -1));
 
         jLabel5.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel5.setText("Select Fuel Type");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 100, 90, -1));
+        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 130, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 51, 51));
-        jLabel2.setText("Fuel Capacity   :  10 000L");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 60, 140, -1));
+        jLabel2.setText("Fuel Tank Capacity   :  10 000L");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 60, -1, -1));
 
         btn_back.setBackground(new java.awt.Color(178, 0, 0));
         btn_back.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -300,7 +300,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jLabel6.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel6.setText("Free Stock");
         jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 160, -1, -1));
-        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 80, 190, 10));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, 220, 10));
 
         availablestock_txt.setEditable(false);
         availablestock_txt.addActionListener(new java.awt.event.ActionListener() {
@@ -312,34 +312,36 @@ public class PetroPointInterface extends javax.swing.JFrame {
 
         spacestock_txt.setEditable(false);
         jPanel1.add(spacestock_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 150, 110, 30));
-        jPanel1.add(jDateChooser_for_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 150, -1));
 
-        FuelType_Combo1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        FuelType_Combo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petrol", "Diesel" }));
-        FuelType_Combo1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FuelType_Combo1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(FuelType_Combo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 140, 40));
-        jPanel1.add(added_stock_text_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 310, 150, -1));
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel7.setText("Select Date");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 220, 80, 20));
 
+        jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel9.setText("Daly Stocked Amount");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 266, 130, 30));
+        jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, 220, 10));
+
+        jPanel4.setBackground(new java.awt.Color(229, 229, 229));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        jPanel4.add(jDateChooser_for_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 200, -1));
+
+        added_stock_text_field.setEditable(false);
+        added_stock_text_field.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jPanel4.add(added_stock_text_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 140, -1));
+
+        btn_search__stock_added_by_date.setBackground(new java.awt.Color(178, 0, 0));
+        btn_search__stock_added_by_date.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_search__stock_added_by_date.setForeground(new java.awt.Color(255, 255, 255));
         btn_search__stock_added_by_date.setText("Search");
         btn_search__stock_added_by_date.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btn_search__stock_added_by_dateActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_search__stock_added_by_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 350, -1, 30));
+        jPanel4.add(btn_search__stock_added_by_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, -1, 30));
 
-        jLabel7.setText("Date");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, -1, -1));
-
-        jLabel8.setText("Select Fuel");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 260, -1, -1));
-
-        jLabel9.setText("Stocked value");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 310, 80, -1));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 370, 180));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -377,36 +379,42 @@ public class PetroPointInterface extends javax.swing.JFrame {
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
         new HomePage().setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btn_backActionPerformed
 
     private void btn_clrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clrActionPerformed
-        // TODO add your handling code here:
+
+    Refill_text.setText("");
+    jDateChooser_for_stock.setDate(null);
     }//GEN-LAST:event_btn_clrActionPerformed
 
     private void availablestock_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availablestock_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_availablestock_txtActionPerformed
 
-    private void FuelType_Combo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_Combo1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_FuelType_Combo1ActionPerformed
-
     private void btn_search__stock_added_by_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_search__stock_added_by_dateActionPerformed
         
-        // Get the date from the date picker (jDateChooser2)
+  try {
+    // Get the date from the date picker (jDateChooser2)
     SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd");
+    if (jDateChooser_for_stock.getDate() == null) {
+        JOptionPane.showMessageDialog(null, "Please select a date.", "Input Error", JOptionPane.WARNING_MESSAGE);
+        return; // Exit if no date is selected
+    }
     String date = dformat.format(jDateChooser_for_stock.getDate());  // Convert selected date to String
     
     // Get the selected fuel type
-    String fuelType = FuelType_Combo_for_stock_by_date.getSelectedItem().toString();
+    String fuelType = FuelType_Combo_for_stock_by_date.getSelectedItem() != null 
+                      ? FuelType_Combo_for_stock_by_date.getSelectedItem().toString() 
+                      : "";
     
-    String pumpTable;
-    if (fuelType.equals("Petrol")) {
-        pumpTable = "petrolstocktable";
-    } else {
-        pumpTable = "dieselstocktable";
+    if (fuelType.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Please select a fuel type.", "Input Error", JOptionPane.WARNING_MESSAGE);
+        return; // Exit if no fuel type is selected
     }
-
+    
+    String pumpTable = fuelType.equals("Petrol") ? "petrolstocktable" : "dieselstocktable";
+    
     // SQL query to fetch pump values for the selected date
     String query = "SELECT amount FROM " + pumpTable + " WHERE DATE(datetime) = ?";
     
@@ -425,17 +433,23 @@ public class PetroPointInterface extends javax.swing.JFrame {
                 count++;
             }
             
-            // If there are records, display the total pumped value
+            // If there are records, display the total stocked value
             if (count > 0) {
-                added_stock_text_field.setText("Total Stocked value: " + totalAmount);
+                added_stock_text_field.setText(totalAmount+"L");
             } else {
-                added_stock_text_field.setText("No records found for this date.");
+                JOptionPane.showMessageDialog(null, "No records found for this date.", "Information", JOptionPane.INFORMATION_MESSAGE);
             }
         }
         
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(this, "Error fetching pump data: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
-    }
+      } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error fetching pump data: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+      }
+    
+    } catch (Exception e) {
+    // Catch unexpected exceptions to prevent application crash
+    JOptionPane.showMessageDialog(null, "An unexpected error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        }
+
 
     }//GEN-LAST:event_btn_search__stock_added_by_dateActionPerformed
 
@@ -464,7 +478,6 @@ public class PetroPointInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> FuelType_Combo1;
     private javax.swing.JComboBox<String> FuelType_Combo_for_stock_by_date;
     private javax.swing.JTextField Refill_text;
     private javax.swing.JTextField added_stock_text_field;
@@ -481,12 +494,13 @@ public class PetroPointInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JSeparator jSeparator2;
     private javax.swing.JTextField spacestock_txt;
     // End of variables declaration//GEN-END:variables
 }
