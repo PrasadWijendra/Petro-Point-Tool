@@ -1,6 +1,7 @@
 
 package petro.point.tool;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -232,6 +233,9 @@ if (stockTable.equals("petrolstock")) {
         Collections.swap(list, i + 1, high);
         return i + 1;
     }
+    
+    
+    
  
 
 
@@ -247,7 +251,7 @@ if (stockTable.equals("petrolstock")) {
         Pprice_txt = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         Dprice_txt = new javax.swing.JTextField();
-        FuelType_Combo = new javax.swing.JComboBox<>();
+        FuelType_Combo_for_calculate = new javax.swing.JComboBox<>();
         pump_text = new javax.swing.JTextField();
         btn_pump = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
@@ -261,6 +265,15 @@ if (stockTable.equals("petrolstock")) {
         maxpump_txt = new javax.swing.JTextField();
         minpump_txt = new javax.swing.JTextField();
         avaragepump_txt = new javax.swing.JTextField();
+        FuelType_Combo1 = new javax.swing.JComboBox<>();
+        pump_valuse_of_date = new javax.swing.JTextField();
+        btn_get_pump_valuse_by_date = new javax.swing.JButton();
+        jDateChooser2 = new com.toedter.calendar.JDateChooser();
+        money_amount_of_fuel = new javax.swing.JTextField();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        jLabel11 = new javax.swing.JLabel();
+        jLabel12 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -298,14 +311,14 @@ if (stockTable.equals("petrolstock")) {
         Dprice_txt.setForeground(new java.awt.Color(255, 0, 0));
         jPanel1.add(Dprice_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 50, 120, 30));
 
-        FuelType_Combo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        FuelType_Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petrol", "Diesel" }));
-        FuelType_Combo.addActionListener(new java.awt.event.ActionListener() {
+        FuelType_Combo_for_calculate.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        FuelType_Combo_for_calculate.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petrol", "Diesel" }));
+        FuelType_Combo_for_calculate.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FuelType_ComboActionPerformed(evt);
+                FuelType_Combo_for_calculateActionPerformed(evt);
             }
         });
-        jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 140, 30));
+        jPanel1.add(FuelType_Combo_for_calculate, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 180, 140, 30));
 
         pump_text.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         pump_text.addActionListener(new java.awt.event.ActionListener() {
@@ -375,20 +388,58 @@ if (stockTable.equals("petrolstock")) {
         avaragepump_txt.setEditable(false);
         jPanel1.add(avaragepump_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 180, 110, -1));
 
+        FuelType_Combo1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        FuelType_Combo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petrol", "Diesel" }));
+        FuelType_Combo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FuelType_Combo1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(FuelType_Combo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 260, 140, 30));
+
+        pump_valuse_of_date.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                pump_valuse_of_dateActionPerformed(evt);
+            }
+        });
+        jPanel1.add(pump_valuse_of_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 240, 150, -1));
+
+        btn_get_pump_valuse_by_date.setText("Search");
+        btn_get_pump_valuse_by_date.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_get_pump_valuse_by_dateActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_get_pump_valuse_by_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 330, -1, 20));
+        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(468, 120, 130, -1));
+        jPanel1.add(money_amount_of_fuel, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 280, 150, -1));
+
+        jLabel9.setText("Date");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 120, 40, -1));
+
+        jLabel10.setText("Select Fuel");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 190, 60, -1));
+
+        jLabel11.setText("Pump Amount");
+        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 240, -1, -1));
+
+        jLabel12.setText("Pump amount value");
+        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 280, -1, -1));
+
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 500));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void FuelType_ComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_ComboActionPerformed
-        String fuelType = FuelType_Combo.getSelectedItem().toString();
+    private void FuelType_Combo_for_calculateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_Combo_for_calculateActionPerformed
+        String fuelType = FuelType_Combo_for_calculate.getSelectedItem().toString();
         calculatePumpStats(fuelType);
-    }//GEN-LAST:event_FuelType_ComboActionPerformed
+    }//GEN-LAST:event_FuelType_Combo_for_calculateActionPerformed
 
     private void btn_pumpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_pumpActionPerformed
          try {
-            String fuelType = FuelType_Combo.getSelectedItem().toString();
+            String fuelType = FuelType_Combo_for_calculate.getSelectedItem().toString();
             int amount = Integer.parseInt(pump_text.getText());
 
             transactionList.addTransaction(fuelType, amount);
@@ -412,6 +463,19 @@ if (stockTable.equals("petrolstock")) {
         // TODO add your handling code here:
     }//GEN-LAST:event_btn_clrActionPerformed
 
+    private void FuelType_Combo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_Combo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FuelType_Combo1ActionPerformed
+
+    private void pump_valuse_of_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_pump_valuse_of_dateActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pump_valuse_of_dateActionPerformed
+
+    private void btn_get_pump_valuse_by_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_get_pump_valuse_by_dateActionPerformed
+    
+
+    }//GEN-LAST:event_btn_get_pump_valuse_by_dateActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -431,13 +495,19 @@ if (stockTable.equals("petrolstock")) {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextField Dprice_txt;
-    private javax.swing.JComboBox<String> FuelType_Combo;
+    private javax.swing.JComboBox<String> FuelType_Combo1;
+    private javax.swing.JComboBox<String> FuelType_Combo_for_calculate;
     private javax.swing.JTextField Pprice_txt;
     private javax.swing.JTextField avaragepump_txt;
     private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_clr;
+    private javax.swing.JButton btn_get_pump_valuse_by_date;
     private javax.swing.JButton btn_pump;
+    private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -445,12 +515,15 @@ if (stockTable.equals("petrolstock")) {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JTextField maxpump_txt;
     private javax.swing.JTextField minpump_txt;
+    private javax.swing.JTextField money_amount_of_fuel;
     private javax.swing.JTextField pump_text;
+    private javax.swing.JTextField pump_valuse_of_date;
     // End of variables declaration//GEN-END:variables
 }

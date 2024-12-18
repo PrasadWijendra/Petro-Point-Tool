@@ -1,6 +1,7 @@
 
 package petro.point.tool;
 import java.sql.*;
+import java.text.SimpleDateFormat;
 import javax.swing.JOptionPane;
 
 public class PetroPointInterface extends javax.swing.JFrame {
@@ -192,7 +193,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        FuelType_Combo = new javax.swing.JComboBox<>();
+        FuelType_Combo_for_stock_by_date = new javax.swing.JComboBox<>();
         Refill_text = new javax.swing.JTextField();
         btn_refill = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
@@ -208,6 +209,13 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jSeparator1 = new javax.swing.JSeparator();
         availablestock_txt = new javax.swing.JTextField();
         spacestock_txt = new javax.swing.JTextField();
+        jDateChooser_for_stock = new com.toedter.calendar.JDateChooser();
+        FuelType_Combo1 = new javax.swing.JComboBox<>();
+        added_stock_text_field = new javax.swing.JTextField();
+        btn_search__stock_added_by_date = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -215,14 +223,14 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jPanel1.setForeground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        FuelType_Combo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        FuelType_Combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petrol", "Diesel" }));
-        FuelType_Combo.addActionListener(new java.awt.event.ActionListener() {
+        FuelType_Combo_for_stock_by_date.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        FuelType_Combo_for_stock_by_date.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petrol", "Diesel" }));
+        FuelType_Combo_for_stock_by_date.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                FuelType_ComboActionPerformed(evt);
+                FuelType_Combo_for_stock_by_dateActionPerformed(evt);
             }
         });
-        jPanel1.add(FuelType_Combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 140, 40));
+        jPanel1.add(FuelType_Combo_for_stock_by_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 250, 140, 40));
 
         Refill_text.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jPanel1.add(Refill_text, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 140, 40));
@@ -304,6 +312,34 @@ public class PetroPointInterface extends javax.swing.JFrame {
 
         spacestock_txt.setEditable(false);
         jPanel1.add(spacestock_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 150, 110, 30));
+        jPanel1.add(jDateChooser_for_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 210, 150, -1));
+
+        FuelType_Combo1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        FuelType_Combo1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petrol", "Diesel" }));
+        FuelType_Combo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                FuelType_Combo1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(FuelType_Combo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 90, 140, 40));
+        jPanel1.add(added_stock_text_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 310, 150, -1));
+
+        btn_search__stock_added_by_date.setText("Search");
+        btn_search__stock_added_by_date.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_search__stock_added_by_dateActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_search__stock_added_by_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 350, -1, 30));
+
+        jLabel7.setText("Date");
+        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, -1, -1));
+
+        jLabel8.setText("Select Fuel");
+        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 260, -1, -1));
+
+        jLabel9.setText("Stocked value");
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(353, 310, 80, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -325,7 +361,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
     private void btn_refillActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_refillActionPerformed
          try {
             int fuelAmount = Integer.parseInt(Refill_text.getText());
-            String selectedFuelType = FuelType_Combo.getSelectedItem().toString();
+            String selectedFuelType = FuelType_Combo_for_stock_by_date.getSelectedItem().toString();
             RefillFuel(selectedFuelType, fuelAmount);
         } catch (NumberFormatException e) {
             JOptionPane.showMessageDialog(this, "Please enter a valid number.");
@@ -333,11 +369,11 @@ public class PetroPointInterface extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btn_refillActionPerformed
 
-    private void FuelType_ComboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_ComboActionPerformed
-         String selectedFuelType = FuelType_Combo.getSelectedItem().toString();
+    private void FuelType_Combo_for_stock_by_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_Combo_for_stock_by_dateActionPerformed
+         String selectedFuelType = FuelType_Combo_for_stock_by_date.getSelectedItem().toString();
         updateStockDisplay(selectedFuelType);
 
-    }//GEN-LAST:event_FuelType_ComboActionPerformed
+    }//GEN-LAST:event_FuelType_Combo_for_stock_by_dateActionPerformed
 
     private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
         new HomePage().setVisible(true);
@@ -350,6 +386,58 @@ public class PetroPointInterface extends javax.swing.JFrame {
     private void availablestock_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availablestock_txtActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_availablestock_txtActionPerformed
+
+    private void FuelType_Combo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_FuelType_Combo1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_FuelType_Combo1ActionPerformed
+
+    private void btn_search__stock_added_by_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_search__stock_added_by_dateActionPerformed
+        
+        // Get the date from the date picker (jDateChooser2)
+    SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd");
+    String date = dformat.format(jDateChooser_for_stock.getDate());  // Convert selected date to String
+    
+    // Get the selected fuel type
+    String fuelType = FuelType_Combo_for_stock_by_date.getSelectedItem().toString();
+    
+    String pumpTable;
+    if (fuelType.equals("Petrol")) {
+        pumpTable = "petrolstocktable";
+    } else {
+        pumpTable = "dieselstocktable";
+    }
+
+    // SQL query to fetch pump values for the selected date
+    String query = "SELECT amount FROM " + pumpTable + " WHERE DATE(datetime) = ?";
+    
+    try (Connection con = DBConnection.getdbconnection();
+         PreparedStatement stmt = con.prepareStatement(query)) {
+        
+        stmt.setString(1, date);  // Set the date in the query
+        
+        try (ResultSet rs = stmt.executeQuery()) {
+            double totalAmount = 0;
+            int count = 0;
+            
+            // Calculate the total amount pumped on the selected date
+            while (rs.next()) {
+                totalAmount += rs.getDouble("amount");
+                count++;
+            }
+            
+            // If there are records, display the total pumped value
+            if (count > 0) {
+                added_stock_text_field.setText("Total Stocked value: " + totalAmount);
+            } else {
+                added_stock_text_field.setText("No records found for this date.");
+            }
+        }
+        
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error fetching pump data: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
+
+    }//GEN-LAST:event_btn_search__stock_added_by_dateActionPerformed
 
     /**
      * @param args the command line arguments
@@ -376,18 +464,25 @@ public class PetroPointInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> FuelType_Combo;
+    private javax.swing.JComboBox<String> FuelType_Combo1;
+    private javax.swing.JComboBox<String> FuelType_Combo_for_stock_by_date;
     private javax.swing.JTextField Refill_text;
+    private javax.swing.JTextField added_stock_text_field;
     private javax.swing.JTextField availablestock_txt;
     private javax.swing.JButton btn_back;
     private javax.swing.JButton btn_clr;
     private javax.swing.JButton btn_refill;
+    private javax.swing.JButton btn_search__stock_added_by_date;
+    private com.toedter.calendar.JDateChooser jDateChooser_for_stock;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
