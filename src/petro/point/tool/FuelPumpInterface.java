@@ -473,6 +473,49 @@ if (stockTable.equals("petrolstock")) {
 
     private void btn_get_pump_valuse_by_dateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_get_pump_valuse_by_dateActionPerformed
     
+        // Get the date from the date picker
+    SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd");
+    String date = dformat.format(jDateChooser2.getDate());  // Convert selected date to String
+    
+    // Get the selected fuel type
+    String fuelType = FuelType_Combo_for_calculate.getSelectedItem().toString();
+    String pumpTable = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
+    
+    // Get the price for the selected fuel type
+    double price = fuelType.equals("Petrol") ? Double.parseDouble(Pprice_txt.getText()) : Double.parseDouble(Dprice_txt.getText());
+
+    // SQL query to fetch pump values for the selected date
+    String query = "SELECT amount FROM " + pumpTable + " WHERE DATE(datetime) = ?";
+    
+    try (Connection con = DBConnection.getdbconnection();
+         PreparedStatement stmt = con.prepareStatement(query)) {
+        
+        stmt.setString(1, date);  // Set the date in the query
+        
+        try (ResultSet rs = stmt.executeQuery()) {
+            double totalAmount = 0;
+            
+            // Calculate the total amount pumped on the selected date
+            while (rs.next()) {
+                totalAmount += rs.getDouble("amount");
+            }
+            
+            // Calculate the total money for the pumped amount
+            double totalMoney = price * totalAmount;
+            
+            // Set the values in the text fields
+            if (totalAmount > 0) {
+                pump_valuse_of_date.setText("Total pump value: " + totalAmount);
+                money_amount_of_fuel.setText(String.valueOf(totalMoney));  // Set the total money in the text field
+            } else {
+                pump_valuse_of_date.setText("No records found for this date.");
+                money_amount_of_fuel.setText("");  // Clear the money amount field if no records found
+            }
+        }
+        
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error fetching pump data: " + e.getMessage(), "Database Error", JOptionPane.ERROR_MESSAGE);
+    }
 
     }//GEN-LAST:event_btn_get_pump_valuse_by_dateActionPerformed
 
