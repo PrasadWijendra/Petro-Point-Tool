@@ -216,6 +216,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jDateChooser_for_stock = new com.toedter.calendar.JDateChooser();
         added_stock_text_field = new javax.swing.JTextField();
         btn_search__stock_added_by_date = new javax.swing.JButton();
+        jSeparator3 = new javax.swing.JSeparator();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -291,7 +292,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
                 btn_clrActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_clr, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 430, 170, 40));
+        jPanel1.add(btn_clr, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 430, 170, 40));
 
         jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel3.setText("Available Stock");
@@ -322,13 +323,13 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 266, 130, 30));
         jPanel1.add(jSeparator2, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 80, 220, 10));
 
-        jPanel4.setBackground(new java.awt.Color(229, 229, 229));
+        jPanel4.setBackground(new java.awt.Color(234, 234, 234));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel4.add(jDateChooser_for_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 200, -1));
+        jPanel4.add(jDateChooser_for_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 160, -1));
 
         added_stock_text_field.setEditable(false);
         added_stock_text_field.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jPanel4.add(added_stock_text_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 70, 140, -1));
+        jPanel4.add(added_stock_text_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 140, -1));
 
         btn_search__stock_added_by_date.setBackground(new java.awt.Color(178, 0, 0));
         btn_search__stock_added_by_date.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -339,9 +340,10 @@ public class PetroPointInterface extends javax.swing.JFrame {
                 btn_search__stock_added_by_dateActionPerformed(evt);
             }
         });
-        jPanel4.add(btn_search__stock_added_by_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 120, -1, 30));
+        jPanel4.add(btn_search__stock_added_by_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 120, -1, 30));
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, 370, 180));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 360, 180));
+        jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 620, 10));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -501,6 +503,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
+    private javax.swing.JSeparator jSeparator3;
     private javax.swing.JTextField spacestock_txt;
     // End of variables declaration//GEN-END:variables
 }

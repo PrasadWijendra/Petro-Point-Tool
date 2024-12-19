@@ -38,7 +38,7 @@ private void generateForecast() {
             int requiredFuel = averageUsagePerDay * days;
 
             // Set the calculated forecast into the text field
-            jTextField1.setText(String.valueOf(requiredFuel));
+            jTextField1.setText(String.valueOf(requiredFuel+"L"));
 
             // Show a message if available stock is low
             if (availableStock < requiredFuel) {
