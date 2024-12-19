@@ -98,49 +98,72 @@ public class PetroPointInterface extends javax.swing.JFrame {
   private void addNewStockRowToDatabase(String fuelType, int fuelAmount) {
       
       String tableName = fuelType.equals("Petrol") ? "petrolstock" : "dieselstock";
+    String tableNameWithValue = fuelType.equals("Petrol") ? "petrolstocktable" : "dieselstocktable";
+    String stockPriceText = stock_price.getText(); // Get the value from the stock_price text field
 
-        try (Connection con = DBConnection.getdbconnection();
-             PreparedStatement stmt = con.prepareStatement(
-                     "INSERT INTO " + tableName + " (amount, datetime) VALUES (?, ?)")) {
+    // Check if the stock price is valid (numeric check)
+    double stockPrice = 0;
+    try {
+        stockPrice = Double.parseDouble(stockPriceText);
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Please enter a valid stock price.");
+        return; // Exit if stock price is invalid
+    }
 
-            // Set the fuel amount and the current datetime
-            stmt.setInt(1, fuelAmount);
-            stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
-            // Execute the insert
-            
-              int rowsInserted = stmt.executeUpdate();
-              System.out.println("Rows inserted in " + tableName + ": " + rowsInserted);
-        
-            if (rowsInserted > 0) {
-            JOptionPane.showMessageDialog(this, "New stock row added for " + fuelType + ": " + fuelAmount);
+    try (Connection con = DBConnection.getdbconnection()) {
 
-            // Record the transaction in the respective stock table
-            if (fuelType.equals("Petrol")) {
-                recordPetrolStockTransaction(fuelAmount);
-            } else {
-                
-                recordDieselStockTransaction(fuelAmount);
-                
+        // Step 1: Insert into the dieselstock or petrolstock table (without value)
+        String insertQuery = "INSERT INTO " + tableName + " (amount, datetime) VALUES (?, ?)";
+        try (PreparedStatement insertStmt = con.prepareStatement(insertQuery, Statement.RETURN_GENERATED_KEYS)) {
+            insertStmt.setInt(1, fuelAmount);
+            insertStmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+            int rowsInserted = insertStmt.executeUpdate();
+
+            // Step 2: Get the latest inserted ID (dsid or psid)
+            ResultSet rs = insertStmt.getGeneratedKeys();
+            int latestId = -1;
+            if (rs.next()) {
+                latestId = rs.getInt(1);  // dsid or psid
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Failed to add new stock row for " + fuelType);
+
+            if (latestId == -1) {
+                JOptionPane.showMessageDialog(this, "Error getting the latest ID.");
+                return;
+            }
+
+            // Step 3: Insert into the dieselstocktable or petrolstocktable with stock price (value)
+            String insertQueryWithValue = "INSERT INTO " + tableNameWithValue + " (amount, datetime, value) VALUES (?, ?, ?)";
+            try (PreparedStatement insertStmtWithValue = con.prepareStatement(insertQueryWithValue)) {
+                insertStmtWithValue.setInt(1, fuelAmount);
+                insertStmtWithValue.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+                insertStmtWithValue.setDouble(3, stockPrice);
+                int rowsInsertedValue = insertStmtWithValue.executeUpdate();
+
+                if (rowsInsertedValue > 0) {
+                    JOptionPane.showMessageDialog(this, "New stock row added for " + fuelType + ": " + fuelAmount);
+                } else {
+                    JOptionPane.showMessageDialog(this, "Failed to add value for " + fuelType);
+                }
+            }
         }
+
     } catch (Exception e) {
         e.printStackTrace();
         JOptionPane.showMessageDialog(this, "Error adding new stock row for " + fuelType + " in database: " + e.getMessage());
     }
     }
   
-  private void recordPetrolStockTransaction(int fuelAmount) {
+  private void recordPetrolStockTransaction(int fuelAmount,double stockPrice) {
     try (Connection con = DBConnection.getdbconnection();
          PreparedStatement stmt = con.prepareStatement(
-                 "INSERT INTO petrolstocktable (amount, datetime) VALUES (?, ?)")) {
+                 "INSERT INTO petrolstocktable (amount, datetime, value) VALUES (?, ?, ?)")) {
 
         stmt.setInt(1, fuelAmount);
         stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+        stmt.setDouble(3, stockPrice);  // Set the stock price for the 'value' column
 
         stmt.executeUpdate();
-        System.out.println("Transaction recorded in petrolstocktable: " + fuelAmount);
+        System.out.println("Transaction recorded in petrolstocktable: " + fuelAmount + ", Price: " + stockPrice);
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -148,16 +171,17 @@ public class PetroPointInterface extends javax.swing.JFrame {
     }
 }
   
- private void recordDieselStockTransaction(int fuelAmount) {
+ private void recordDieselStockTransaction(int fuelAmount,double stockPrice) {
     try (Connection con = DBConnection.getdbconnection();
          PreparedStatement stmt = con.prepareStatement(
-                 "INSERT INTO dieselstocktable (amount, datetime) VALUES (?, ?)")) {
+                 "INSERT INTO dieselstocktable (amount, datetime, value) VALUES (?, ?, ?)")) {
 
         stmt.setInt(1, fuelAmount);
         stmt.setTimestamp(2, new Timestamp(System.currentTimeMillis()));
+        stmt.setDouble(3, stockPrice);  // Set the stock price for the 'value' column
 
         stmt.executeUpdate();
-        System.out.println("Transaction recorded in dieselstocktable: " + fuelAmount);
+        System.out.println("Transaction recorded in dieselstocktable: " + fuelAmount + ", Price: " + stockPrice);
 
     } catch (Exception e) {
         e.printStackTrace();
@@ -211,14 +235,15 @@ public class PetroPointInterface extends javax.swing.JFrame {
         spacestock_txt = new javax.swing.JTextField();
         jSeparator2 = new javax.swing.JSeparator();
         jPanel4 = new javax.swing.JPanel();
-        jDateChooser_from_date = new com.toedter.calendar.JDateChooser();
         added_stock_text_field = new javax.swing.JTextField();
         btn_search__stock_added_by_date = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jDateChooser_TO_Date = new com.toedter.calendar.JDateChooser();
+        jDateChooser_for_stock = new com.toedter.calendar.JDateChooser();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
+        price_sum = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
+        stock_price = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -319,11 +344,10 @@ public class PetroPointInterface extends javax.swing.JFrame {
 
         jPanel4.setBackground(new java.awt.Color(234, 234, 234));
         jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        jPanel4.add(jDateChooser_from_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 160, -1));
 
         added_stock_text_field.setEditable(false);
         added_stock_text_field.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jPanel4.add(added_stock_text_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 140, -1));
+        jPanel4.add(added_stock_text_field, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 140, -1));
 
         btn_search__stock_added_by_date.setBackground(new java.awt.Color(178, 0, 0));
         btn_search__stock_added_by_date.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -338,19 +362,21 @@ public class PetroPointInterface extends javax.swing.JFrame {
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel9.setText("Daly Stocked Amount");
-        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 130, 30));
-        jPanel4.add(jDateChooser_TO_Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 60, 160, -1));
+        jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 130, 30));
+        jPanel4.add(jDateChooser_for_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 160, -1));
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel7.setText("From Date");
-        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 80, 20));
+        jPanel4.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 0, 80, 20));
 
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel8.setText("To Date");
-        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, 80, 20));
+        jPanel4.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 30, 80, 20));
+        jPanel4.add(price_sum, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 140, -1));
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 200, 360, 180));
         jPanel1.add(jSeparator3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 410, 620, 10));
+        jPanel1.add(stock_price, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 340, 140, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -394,8 +420,8 @@ public class PetroPointInterface extends javax.swing.JFrame {
     private void btn_clrActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_clrActionPerformed
 
     Refill_text.setText("");
-    jDateChooser_from_date.setDate(null);
-    jDateChooser_TO_Date.setDate(null);
+    
+    jDateChooser_for_stock.setDate(null);
     }//GEN-LAST:event_btn_clrActionPerformed
 
     private void availablestock_txtActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_availablestock_txtActionPerformed
@@ -406,16 +432,13 @@ public class PetroPointInterface extends javax.swing.JFrame {
         
        
     try {
-        // Get the dates from the date pickers (jDateChooser_from_date and jDateChooser_TO_Date)
+        // Get the date from the date picker (jDateChooser_for_stock)
         SimpleDateFormat dformat = new SimpleDateFormat("yyyy-MM-dd");
-
-        if (jDateChooser_from_date.getDate() == null || jDateChooser_TO_Date.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Please select both From and To dates.", "Input Error", JOptionPane.WARNING_MESSAGE);
-            return; // Exit if either date is not selected
+        if (jDateChooser_for_stock.getDate() == null) {
+            JOptionPane.showMessageDialog(null, "Please select a date.", "Input Error", JOptionPane.WARNING_MESSAGE);
+            return; // Exit if no date is selected
         }
-
-        String fromDate = dformat.format(jDateChooser_from_date.getDate()); // Convert From Date to String
-        String toDate = dformat.format(jDateChooser_TO_Date.getDate());     // Convert To Date to String
+        String date = dformat.format(jDateChooser_for_stock.getDate());  // Convert selected date to String
 
         // Get the selected fuel type
         String fuelType = FuelType_Combo_for_stock_by_date.getSelectedItem() != null 
@@ -429,27 +452,41 @@ public class PetroPointInterface extends javax.swing.JFrame {
 
         String pumpTable = fuelType.equals("Petrol") ? "petrolstocktable" : "dieselstocktable";
 
-        // SQL query to fetch pump values for the selected date range
-        String query = "SELECT SUM(amount) AS total_amount FROM " + pumpTable 
-                     + " WHERE DATE(datetime) BETWEEN ? AND ?";
+        // SQL query to fetch pump values for the selected date
+        String query = "SELECT SUM(amount) AS totalAmount, SUM(amount * value) AS totalPrice FROM " + pumpTable + " WHERE DATE(datetime) = ?";
 
         try (Connection con = DBConnection.getdbconnection();
              PreparedStatement stmt = con.prepareStatement(query)) {
 
-            stmt.setString(1, fromDate); // Set From Date in the query
-            stmt.setString(2, toDate);   // Set To Date in the query
+            stmt.setString(1, date);  // Set the date in the query
 
             try (ResultSet rs = stmt.executeQuery()) {
-                if (rs.next()) {
-                    double totalAmount = rs.getDouble("total_amount");
+                double totalAmount = 0;
+                double totalPrice = 0;
 
-                    // If there are records, display the total stocked value
-                    if (totalAmount > 0) {
-                        added_stock_text_field.setText(totalAmount + "L");
-                    } else {
-                        JOptionPane.showMessageDialog(null, "No records found for this date range.", "Information", JOptionPane.INFORMATION_MESSAGE);
-                    }
+                // Calculate the total amount pumped and total price for the selected date
+                if (rs.next()) {
+                    totalAmount = rs.getDouble("totalAmount");
+                    totalPrice = rs.getDouble("totalPrice");
                 }
+
+                // Calculate price per liter
+                double pricePerLiter = totalAmount != 0 ? totalPrice / totalAmount : 0;
+
+                // Display the total amount of fuel pumped in the added_stock_text_field
+                added_stock_text_field.setText(totalAmount + "L");
+
+                // Display the total price of the fuel pumped in the price_sum text field
+                price_sum.setText(totalPrice + " $");
+
+                // Optionally, log or use the pricePerLiter for further calculations
+                System.out.println("Average price per liter: " + pricePerLiter + " $/L");
+
+                // If no records were found for the selected date, show a message
+                if (totalAmount == 0) {
+                    JOptionPane.showMessageDialog(null, "No records found for this date.", "Information", JOptionPane.INFORMATION_MESSAGE);
+                }
+
             }
 
         } catch (SQLException e) {
@@ -460,6 +497,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
         // Catch unexpected exceptions to prevent application crash
         JOptionPane.showMessageDialog(null, "An unexpected error occurred: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
     }
+
 
 
     }//GEN-LAST:event_btn_search__stock_added_by_dateActionPerformed
@@ -497,8 +535,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
     private javax.swing.JButton btn_clr;
     private javax.swing.JButton btn_refill;
     private javax.swing.JButton btn_search__stock_added_by_date;
-    private com.toedter.calendar.JDateChooser jDateChooser_TO_Date;
-    private com.toedter.calendar.JDateChooser jDateChooser_from_date;
+    private com.toedter.calendar.JDateChooser jDateChooser_for_stock;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -515,6 +552,8 @@ public class PetroPointInterface extends javax.swing.JFrame {
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JSeparator jSeparator2;
     private javax.swing.JSeparator jSeparator3;
+    private javax.swing.JTextField price_sum;
     private javax.swing.JTextField spacestock_txt;
+    private javax.swing.JTextField stock_price;
     // End of variables declaration//GEN-END:variables
 }
