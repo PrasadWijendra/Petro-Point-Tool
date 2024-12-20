@@ -135,6 +135,7 @@ public class NextMonthFuelAssumption extends javax.swing.JFrame {
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void cal_btnActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cal_btnActionPerformed
