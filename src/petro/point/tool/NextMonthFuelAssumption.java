@@ -19,7 +19,7 @@ public class NextMonthFuelAssumption extends javax.swing.JFrame {
         initComponents();
     double initialCrudePrice = fetchLiveCrudeOilPrice();
     if (initialCrudePrice > 0) {
-        crude_oil_txt.setText(String.format("%.2f", initialCrudePrice));
+        crude_oil_txt.setText(String.format("%.2f",initialCrudePrice));
     } else {
         crude_oil_txt.setText("100.00"); // Fallback value
     }
@@ -39,95 +39,95 @@ public class NextMonthFuelAssumption extends javax.swing.JFrame {
         sl_price_lbl = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         sl_price_txt = new javax.swing.JTextField();
+        jPanel2 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jPanel3 = new javax.swing.JPanel();
+        btn_back = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
+        jSeparator1 = new javax.swing.JSeparator();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        crude_oil_lbl.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         crude_oil_lbl.setText("Today Crude Price");
+        jPanel1.add(crude_oil_lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, -1, 30));
+        crude_oil_lbl.getAccessibleContext().setAccessibleName("Today Crude Oil Price");
 
         crude_oil_txt.setEditable(false);
+        crude_oil_txt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         crude_oil_txt.setToolTipText("");
+        jPanel1.add(crude_oil_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 50, 130, 30));
 
+        cal_btn.setBackground(new java.awt.Color(178, 0, 0));
+        cal_btn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        cal_btn.setForeground(new java.awt.Color(255, 255, 255));
         cal_btn.setText("Calculate");
         cal_btn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cal_btnActionPerformed(evt);
             }
         });
+        jPanel1.add(cal_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 350, 160, 40));
 
+        nxt_month_fuel_txt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         nxt_month_fuel_txt.setText("Next Month Fuel Price");
+        jPanel1.add(nxt_month_fuel_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 127, 20));
 
+        fuel_type_combo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         fuel_type_combo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Petrol", "Diesel" }));
+        jPanel1.add(fuel_type_combo, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 110, 210, 40));
 
         show_fuel_price_txt.setEditable(false);
+        show_fuel_price_txt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jPanel1.add(show_fuel_price_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, 210, 40));
 
+        sl_price_lbl.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         sl_price_lbl.setText("Sri Lankan Price");
+        jPanel1.add(sl_price_lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 250, 98, -1));
 
+        jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("MRP = V1 + V2 + V3 + V4 + V5 + V6 + V7");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 233, 30));
 
         sl_price_txt.setEditable(false);
+        sl_price_txt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jPanel1.add(sl_price_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 270, 210, 40));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(173, 173, 173)
-                        .addComponent(cal_btn))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(51, 51, 51)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(crude_oil_lbl)
-                            .addComponent(nxt_month_fuel_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(sl_price_lbl, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(77, 77, 77)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(crude_oil_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addComponent(fuel_type_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(71, 71, 71)
-                                .addComponent(show_fuel_price_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 122, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(159, 159, 159)
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 233, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(207, 207, 207)
-                        .addComponent(sl_price_txt, javax.swing.GroupLayout.PREFERRED_SIZE, 173, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(52, Short.MAX_VALUE))
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(crude_oil_lbl)
-                            .addComponent(crude_oil_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(45, 45, 45)
-                        .addComponent(nxt_month_fuel_txt))
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(fuel_type_combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(show_fuel_price_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(44, 44, 44)
-                .addComponent(sl_price_lbl)
-                .addGap(11, 11, 11)
-                .addComponent(jLabel2)
-                .addGap(29, 29, 29)
-                .addComponent(sl_price_txt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
-                .addComponent(cal_btn)
-                .addGap(46, 46, 46))
-        );
+        jPanel2.setBackground(new java.awt.Color(178, 0, 0));
 
-        crude_oil_lbl.getAccessibleContext().setAccessibleName("Today Crude Oil Price");
+        jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("PETRO POINT");
+        jPanel2.add(jLabel1);
+
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 660, 40));
+
+        jPanel3.setBackground(new java.awt.Color(178, 0, 0));
+        jPanel1.add(jPanel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 400, 660, 20));
+
+        btn_back.setBackground(new java.awt.Color(178, 0, 0));
+        btn_back.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btn_back.setForeground(new java.awt.Color(255, 255, 255));
+        btn_back.setText("Back");
+        btn_back.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_backActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btn_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 347, 150, 40));
+
+        jLabel3.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel3.setText("Enter Fuel Type");
+        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 120, 100, -1));
+        jPanel1.add(jSeparator1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 90, 640, 20));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -155,7 +155,7 @@ public class NextMonthFuelAssumption extends javax.swing.JFrame {
 
     double averageStock = fetchAverageStock(selectedFuelType.equals("Petrol") ? "petrolstock" : "dieselstock");
     double predictedPrice = calculateNextMonthFuelPrice(crudeOilPrice, averageStock);
-    show_fuel_price_txt.setText(String.format("%.2f", predictedPrice));
+    show_fuel_price_txt.setText(String.format("LKR:%.2f",predictedPrice));
 
     // Calculate Sri Lankan Price based on selected fuel type
     double v1 = crudeOilPrice * 124; // Landed cost per liter (assumed conversion to LKR)
@@ -167,8 +167,13 @@ public class NextMonthFuelAssumption extends javax.swing.JFrame {
     double v7 = 1.0; // Cost saving from refinery production (fixed value)
 
     double sriLankanPrice = v1 + v2 + v3 + v4 + v5 + v6 + v7;
-    sl_price_txt.setText(String.format("%.2f", sriLankanPrice));
+    sl_price_txt.setText(String.format("LKR: %.2f",sriLankanPrice));
     }//GEN-LAST:event_cal_btnActionPerformed
+
+    private void btn_backActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_backActionPerformed
+        new HomePage().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btn_backActionPerformed
 
         private double fetchAverageStock(String tableName) {
         double totalStock = 0.0;
@@ -202,7 +207,7 @@ public class NextMonthFuelAssumption extends javax.swing.JFrame {
         public void actionPerformed(ActionEvent e) {
             double liveCrudeOilPrice = fetchLiveCrudeOilPrice();
             if (liveCrudeOilPrice > 0) {
-                crude_oil_txt.setText(String.format("%.2f", liveCrudeOilPrice));
+                crude_oil_txt.setText(String.format("LKR: %.2f",liveCrudeOilPrice));
             } else {
                 crude_oil_txt.setText("100.00"); // Default fallback value
                 System.out.println("Using fallback crude oil price.");
@@ -257,12 +262,18 @@ public class NextMonthFuelAssumption extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_back;
     private javax.swing.JButton cal_btn;
     private javax.swing.JLabel crude_oil_lbl;
     private javax.swing.JTextField crude_oil_txt;
     private javax.swing.JComboBox<String> fuel_type_combo;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel nxt_month_fuel_txt;
     private javax.swing.JTextField show_fuel_price_txt;
     private javax.swing.JLabel sl_price_lbl;

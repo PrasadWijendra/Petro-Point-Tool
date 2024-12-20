@@ -26,7 +26,7 @@ public class FetchFuelPrices {
             Elements details = section.select("p");
             String priceText = details.isEmpty() ? "Price not available" : details.get(0).text();
 
-            // Extract the full price with decimal (e.g., '309.00')
+            // Extract the full price with decimal
             String price = priceText.replaceAll("[^\\d.]", "");  // Keep digits and decimal point
 
             // Remove the first dot (if exists)

@@ -5,8 +5,6 @@ import java.text.SimpleDateFormat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import javax.swing.JOptionPane;
-import petro.point.tool.FetchFuelPrices;
 import javax.swing.*;
 import java.util.*;
 
@@ -14,11 +12,6 @@ public class FuelPumpInterface extends javax.swing.JFrame {
     
      private PetroPointInterface petroPointInterface;
 
-    private static class con {
-
-        public con() {
-        }
-    }
      
     // Node for Singly Linked List
     class TransactionNode {
@@ -278,7 +271,7 @@ if (stockTable.equals("petrolstock")) {
         jLabel10 = new javax.swing.JLabel();
         jPanel6 = new javax.swing.JPanel();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N

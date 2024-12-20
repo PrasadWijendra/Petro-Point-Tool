@@ -116,7 +116,7 @@ private void generateForecast() {
         jPanel3 = new javax.swing.JPanel();
         btn_back = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -137,7 +137,7 @@ private void generateForecast() {
                 btn_generateForcastActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_generateForcast, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 331, 160, 30));
+        jPanel1.add(btn_generateForcast, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 331, 160, 40));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel2.setText("Required Fuel Amount");
@@ -176,7 +176,7 @@ private void generateForecast() {
                 btn_backActionPerformed(evt);
             }
         });
-        jPanel1.add(btn_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 160, -1));
+        jPanel1.add(btn_back, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 160, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);

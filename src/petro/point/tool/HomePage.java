@@ -33,8 +33,9 @@ public class HomePage extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jPanel3 = new javax.swing.JPanel();
         btn_fuelforcast = new javax.swing.JButton();
+        btn_NextMFA = new javax.swing.JButton();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -49,7 +50,7 @@ public class HomePage extends javax.swing.JFrame {
                 jButton1ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 140, 60));
+        getContentPane().add(jButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 140, 60));
 
         jButton2.setBackground(new java.awt.Color(178, 0, 0));
         jButton2.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -60,7 +61,7 @@ public class HomePage extends javax.swing.JFrame {
                 jButton2ActionPerformed(evt);
             }
         });
-        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 140, 60));
+        getContentPane().add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 60, 140, 60));
 
         jPanel2.setBackground(new java.awt.Color(178, 0, 0));
 
@@ -95,7 +96,18 @@ public class HomePage extends javax.swing.JFrame {
                 btn_fuelforcastActionPerformed(evt);
             }
         });
-        getContentPane().add(btn_fuelforcast, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, 320, 60));
+        getContentPane().add(btn_fuelforcast, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 310, 50));
+
+        btn_NextMFA.setBackground(new java.awt.Color(178, 0, 0));
+        btn_NextMFA.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        btn_NextMFA.setForeground(new java.awt.Color(255, 255, 255));
+        btn_NextMFA.setText("Next Month Fuel Assumption");
+        btn_NextMFA.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_NextMFAActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btn_NextMFA, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 210, 310, 50));
 
         pack();
         setLocationRelativeTo(null);
@@ -112,6 +124,10 @@ public class HomePage extends javax.swing.JFrame {
     private void btn_fuelforcastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_fuelforcastActionPerformed
         new fuelForcast().setVisible(true);
     }//GEN-LAST:event_btn_fuelforcastActionPerformed
+
+    private void btn_NextMFAActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_NextMFAActionPerformed
+        new NextMonthFuelAssumption().setVisible(true);
+    }//GEN-LAST:event_btn_NextMFAActionPerformed
 
     /**
      * @param args the command line arguments
@@ -149,6 +165,7 @@ public class HomePage extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btn_NextMFA;
     private javax.swing.JButton btn_fuelforcast;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
