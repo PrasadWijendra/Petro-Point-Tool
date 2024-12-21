@@ -15,84 +15,99 @@ public class fuelForcast extends javax.swing.JFrame {
     
 private void generateForecast() {
         String forecastPeriod = jComboBox1.getSelectedItem().toString(); // Weekly/Monthly
-        String fuelType = jComboBox2.getSelectedItem().toString(); // Petrol/Diesel
+    String fuelType = jComboBox2.getSelectedItem().toString(); // Petrol/Diesel
 
-        String pumpTable = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
-        String stockTable = fuelType.equals("Petrol") ? "petrolstock" : "dieselstock";
+    String pumpTable = fuelType.equals("Petrol") ? "petrolpump" : "dieselpump";
+    String stockTable = fuelType.equals("Petrol") ? "petrolstock" : "dieselstock";
+
+    int availableStock = getAvailableStock(stockTable);
+
+    try (Connection con = DBConnection.getdbconnection();
+         PreparedStatement stmt = con.prepareStatement(generateQuery(pumpTable, forecastPeriod))) {
+
+        ResultSet rs = stmt.executeQuery();
 
         int totalUsage = 0;
-        int availableStock = getAvailableStock(stockTable);
+        int maxPumpedValue = 0;
+        int days = forecastPeriod.equals("Weekly") ? 7 : 30;
 
-        try (Connection con = DBConnection.getdbconnection();
-             PreparedStatement stmt = con.prepareStatement(generateQuery(pumpTable, forecastPeriod))) {
-
-            ResultSet rs = stmt.executeQuery();
-
-            while (rs.next()) {
-                totalUsage += rs.getInt("amount");
+        // Calculate total usage and find max pumped value
+        while (rs.next()) {
+            int amount = rs.getInt("amount");
+            totalUsage += amount;
+            if (amount > maxPumpedValue) {
+                maxPumpedValue = amount;
             }
-
-            // Calculate forecast based on average usage
-            int days = forecastPeriod.equals("Weekly") ? 7 : 30;
-            int averageUsagePerDay = totalUsage / days;
-            int requiredFuel = averageUsagePerDay * days;
-
-            // Set the calculated forecast into the text field
-            jTextField1.setText(String.valueOf(requiredFuel+"L"));
-
-            // Show a message if available stock is low
-            if (availableStock < requiredFuel) {
-                JOptionPane.showMessageDialog(this, "Warning: Fuel stock is insufficient! Required: "
-                        + requiredFuel + "L, Available: " + availableStock + "L", "Low Stock Warning", JOptionPane.WARNING_MESSAGE);
-            }
-
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error generating forecast: " + e.getMessage());
-            e.printStackTrace();
         }
+
+        // Calculate average usage and estimated future usage
+        int pumpAverage = totalUsage / days;
+        int averageForDay = (pumpAverage + maxPumpedValue) / 2;
+        int nextWeekForecast = averageForDay * 7;
+        int nextMonthForecast = averageForDay * 30;
+
+        // Set the calculated forecast into the text field
+        if (forecastPeriod.equals("Weekly")) {
+            jTextField1.setText(String.valueOf(nextWeekForecast + "L"));
+        } else {
+            jTextField1.setText(String.valueOf(nextMonthForecast + "L"));
+        }
+
+        // Check stock and show message
+        int requiredFuel = forecastPeriod.equals("Weekly") ? nextWeekForecast : nextMonthForecast;
+        if (availableStock < requiredFuel) {
+            JOptionPane.showMessageDialog(this, 
+                "Warning: Fuel stock is insufficient! Required: " + requiredFuel + "L, Available: " + availableStock + "L",
+                "Low Stock Warning", JOptionPane.WARNING_MESSAGE);
+        } else {
+            JOptionPane.showMessageDialog(this, 
+                "Fuel stock is sufficient. Required: " + requiredFuel + "L, Available: " + availableStock + "L",
+                "Stock Status", JOptionPane.INFORMATION_MESSAGE);
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error generating forecast: " + e.getMessage());
+        e.printStackTrace();
+    }
     }
 
     // Helper method to generate SQL query
     private String generateQuery(String pumpTable, String forecastPeriod) {
         LocalDate startDate;
 
-        if (forecastPeriod.equals("Weekly")) {
-            startDate = LocalDate.now().minusWeeks(1);
-        } else {
-            startDate = LocalDate.now().minusMonths(1);
-        }
+    if (forecastPeriod.equals("Weekly")) {
+        startDate = LocalDate.now().minusWeeks(1);
+    } else {
+        startDate = LocalDate.now().minusMonths(1);
+    }
 
-        String formattedDate = startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
-        return "SELECT amount FROM " + pumpTable + " WHERE datetime >= '" + formattedDate + "'";
+    String formattedDate = startDate.format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
+    return "SELECT amount FROM " + pumpTable + " WHERE datetime >= '" + formattedDate + "'";
     }
 
     // Helper method to get available stock from stock table
     private int getAvailableStock(String stockTable) {
         int availableStock = 0;
 
-        // Get the database connection from DBConnection class
-        Connection con = DBConnection.getdbconnection(); // Call the DBConnection class to get the connection
-        
-        // Check if the connection is null (i.e., failed to establish a connection)
-        if (con == null) {
-            JOptionPane.showMessageDialog(this, "Database connection failed.");
-            return availableStock;  // Return 0 if no connection
-        }
-
-        try {
-            // SQL query to get the available stock
-            String query = "SELECT SUM(amount) AS TotalStock FROM " + stockTable;
-            try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
-                if (rs.next()) {
-                    availableStock = rs.getInt("TotalStock");
-                }
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error fetching available stock: " + e.getMessage());
-            e.printStackTrace();
-        }
-
+    Connection con = DBConnection.getdbconnection();
+    if (con == null) {
+        JOptionPane.showMessageDialog(this, "Database connection failed.");
         return availableStock;
+    }
+
+    try {
+        String query = "SELECT SUM(amount) AS TotalStock FROM " + stockTable;
+        try (Statement stmt = con.createStatement(); ResultSet rs = stmt.executeQuery(query)) {
+            if (rs.next()) {
+                availableStock = rs.getInt("TotalStock");
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error fetching available stock: " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    return availableStock;
     }
     /**
      * This method is called from within the constructor to initialize the form.
