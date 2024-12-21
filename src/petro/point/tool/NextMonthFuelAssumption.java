@@ -72,7 +72,7 @@ public class NextMonthFuelAssumption extends javax.swing.JFrame {
         jPanel1.add(cal_btn, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 350, 160, 40));
 
         nxt_month_fuel_txt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        nxt_month_fuel_txt.setText("Next Month Fuel Price");
+        nxt_month_fuel_txt.setText("Changing Fuel Price");
         jPanel1.add(nxt_month_fuel_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 190, 127, 20));
 
         fuel_type_combo.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -84,12 +84,12 @@ public class NextMonthFuelAssumption extends javax.swing.JFrame {
         jPanel1.add(show_fuel_price_txt, new org.netbeans.lib.awtextra.AbsoluteConstraints(410, 180, 210, 40));
 
         sl_price_lbl.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        sl_price_lbl.setText("Sri Lankan Price");
-        jPanel1.add(sl_price_lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 250, 98, -1));
+        sl_price_lbl.setText("Next Month Sri Lankan Fuel Price");
+        jPanel1.add(sl_price_lbl, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 250, 200, -1));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         jLabel2.setText("MRP = V1 + V2 + V3 + V4 + V5 + V6 + V7");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 233, 30));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 270, 240, 30));
 
         sl_price_txt.setEditable(false);
         sl_price_txt.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
