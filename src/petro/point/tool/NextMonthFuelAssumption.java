@@ -156,7 +156,7 @@ public class NextMonthFuelAssumption extends javax.swing.JFrame {
 
     double averageStock = fetchAverageStock(selectedFuelType.equals("Petrol") ? "petrolstock" : "dieselstock");
     double predictedPrice = calculateNextMonthFuelPrice(crudeOilPrice, averageStock);
-    show_fuel_price_txt.setText(String.format("LKR:%.2f",predictedPrice));
+    show_fuel_price_txt.setText(String.format("LKR: %.2f",predictedPrice));
 
     // Calculate Sri Lankan Price based on selected fuel type
     double v1 = crudeOilPrice * 124; // Landed cost per liter (assumed conversion to LKR)

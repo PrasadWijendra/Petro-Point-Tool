@@ -365,7 +365,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jPanel4.add(btn_search__stock_added_by_date, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, -1, 30));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel9.setText("Daly Stocked Value");
+        jLabel9.setText("Stocked Value");
         jPanel4.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 100, 130, 30));
         jPanel4.add(jDateChooser_to_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 160, -1));
 
@@ -381,7 +381,7 @@ public class PetroPointInterface extends javax.swing.JFrame {
         jPanel4.add(price_sum, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 140, -1));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        jLabel10.setText("Daly Stocked Amount");
+        jLabel10.setText("Stocked Amount");
         jPanel4.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 130, 30));
         jPanel4.add(jDateChooser_from_stock, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 160, -1));
 
